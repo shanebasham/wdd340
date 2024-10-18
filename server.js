@@ -11,8 +11,10 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
-// require the inventory route file?
+// require the inventory route file
 const inventoryRoute = require("./routes/inventoryRoute");
+// require the utilities file
+const utilities = require("./utilities/")
 
 
 /* ***********************
@@ -29,13 +31,31 @@ app.set("layout", "./layouts/layout") // not at views root
 app.use(static)
 
 // Index Route
-app.get("/", baseController.buildHome)
-// app.get("/", function(req, res){
-//   res.render("index", {title: "Home"})
-// })
+app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
+
+// File Not Found Route - must be last route in list
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Oops Looks Like Your Page Is Not Loading, Please Try Again!'})
+})
+
+
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
+  res.render("errors/error", {
+    title: err.status || 'Server Error',
+    message,
+    nav
+  })
+})
 
 /* ***********************
  * Local Server Information
