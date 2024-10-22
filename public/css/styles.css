@@ -133,6 +133,25 @@ footer p {
 
 
 
+.vehicle-detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.vehicle-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.vehicle-info {
+  margin: 20px;
+}
+
+
+
+
 @media only screen and (max-width: 900px) {
 .modal-content {
     width: 100%;
@@ -140,6 +159,10 @@ footer p {
 
 *, *:before, *:after {
   box-sizing: border-box;
+}
+
+.vehicle-detail {
+  flex-direction: column;
 }
 
 form {

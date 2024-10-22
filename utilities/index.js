@@ -57,11 +57,55 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build detailed view html?
+* ************************************ */
+Util.buildDetailedView = async function(data){
+  let grid
+  if(data.length > 0){
+    grid = '<ul id="inv-display">'
+    data.forEach(vehicle => { 
+      grid += '<div class="vehicle-image">'
+      grid += '<img src="'+vehicle.inv_image+'" alt="Image of '+vehicle.inv_make+' '+vehicle.inv_model+' on CSE Motors" />'
+      grid += '</div>'
+      grid += '<div class="vehicle-info">'
+      grid += '<h1>'+vehicle.inv_make+vehicle.inv_model+'</h1>'
+      grid += '<p><strong>Year:</strong>'+vehicle.inv_year+'</p>'
+      grid += '<p><strong>Price:</strong>'+Intl.NumberFormat('en-US').format(vehicle.inv_price)+'</p>'
+      grid += '<p><strong>Mileage:</strong>'+vehicle.inv_miles+" miles"+'</p>'
+      grid += '<p><strong>Description:</strong>'+vehicle.inv_description+'</p>'
+      grid += '</div>'
+    })
+    grid += '</ul>'
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+// ?
+//   </html>
+//   <body>
+//       <div class="vehicle-detail">
+//           <div class="vehicle-image">
+//               <img src="${vehicle.imageUrl}" alt="${vehicle.make} ${vehicle.model}">
+//           </div>
+//           <div class="vehicle-info">
+//               <h1>${vehicle.make} ${vehicle.model}</h1>
+//               <p><strong>Year:</strong> ${vehicle.year}</p>
+//               <p><strong>Price:</strong> $${vehicle.price.toLocaleString()}</p>
+//               <p><strong>Mileage:</strong> ${vehicle.mileage.toLocaleString()} miles</p>
+//               <p><strong>Description:</strong> ${vehicle.description}</p>
+//           </div>
+//       </div>
+//   </body>
+//   </html>
 
 module.exports = Util
