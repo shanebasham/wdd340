@@ -35,19 +35,5 @@ invCont.getVehicleDetails = async function (req, res, next) {
       grid,
     })
   }
-// exports.getVehicleDetails = async (req, res) => {
-//     const vehicleId = req.params.id;
-//     try {
-//         const vehicle = await inventoryModel.getDataByInventoryId(vehicleId);
-//         if (vehicle) {
-//             const vehicleHtml = wrapVehicleInHtml(vehicle);
-//             res.send(vehicleHtml);
-//         } else {
-//             res.status(404).send('Vehicle not found');
-//         }
-//     } catch (error) {
-//         res.status(500).send('Server error');
-//     }
-// };
 
 module.exports = invCont

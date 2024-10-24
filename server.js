@@ -15,7 +15,35 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute");
 // require the utilities file
 const utilities = require("./utilities/")
+// add session and access to the database connection
+const session = require("express-session")
+const pool = require('./database/')
+// require the account route file
+const accountRoute = require("./routes/accountRoute");
+// tells the express application to use the body parser to work with JSON data
+const bodyParser = require("body-parser")
 
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 /* ***********************
  * View Engine and Templates
@@ -29,13 +57,13 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes
  *************************/
 app.use(static)
-
 // Index Route
 app.get("/", utilities.handleErrors(baseController.buildHome))
-
 // Inventory routes
 app.use("/inv", inventoryRoute)
-
+// Account routes
+// app.use("/account", require("./routes/accountRoute"))
+app.use("/account", accountRoute)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Oops Looks Like Your Page Is Not Loading, Please Try Again!'})

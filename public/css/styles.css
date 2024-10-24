@@ -17,54 +17,52 @@ html {
 }
   
 .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-    position: relative;
-  }
-  img.avatar {
-    width: 25%;
-    border-radius: 50%;
-  }
-  span.psw {
-    float: right;
-    padding-top: 16px;
-  }
-
-header a {
-  font-family: "Lucida Console", "Courier New", monospace;
-  display: inline-block;
-  text-decoration: none;
-  color: white;
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
 }
-h1 {
+img.avatar {
+  width: 25%;
+  border-radius: 50%;
+}
+span.psw {
   float: right;
-  padding-left: 25px;
+  padding-top: 16px;
 }
 header {
-  padding-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
   color: white;
   background-color: black;
   text-decoration: none;
-  text-align: center;
   border: 4px solid white;
 }
+header a {
+  font-family: "Lucida Console", "Courier New", monospace;
+  text-decoration: none;
+  color: white;
+}
 nav {
-  border-top: 4px solid white;
+  padding-bottom: 5px;
+  border-top: 8px solid black;
+  border: 4px solid white;
   flex-direction: column;
+  background-color: black;
 }
 nav a {
-  display: block;
   color: black;
   text-decoration: none;
   text-align: center;
-  margin: 15px 50px;
+  margin: 0px 50px;
+  color: white;
 }
 ul {
+  display: flex;
+  justify-content: space-around;
   list-style: none;
 }
-li {
-  display: inline-block;
-}
+
 
 html, body {
     width: 100%;
@@ -82,7 +80,10 @@ html, body {
   row-gap: 50px;
   text-align: center;
 }
-
+h1 {
+  text-align: center;
+  padding-left: 25px;
+}
 .img {
     z-index: 1;
     width: 125px;
@@ -149,7 +150,59 @@ footer p {
   margin: 20px;
 }
 
+                  /* LOGIN */
 
+
+.flash-message {
+  margin-bottom: 20px;
+  color: red; 
+}
+
+form {
+  padding: 25px;
+  margin: auto;
+  width: 50%;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.form-group {
+  margin-left: 50px;
+}
+
+label {
+    display: absolute;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 90%;
+    padding: 5px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: 4px solid white;
+    background: #007BFF;
+    color: white;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+}
 
 
 @media only screen and (max-width: 900px) {
@@ -170,15 +223,13 @@ form {
   align-self: center;
 }
 ul {
+  flex-direction: column;
   text-align: center;
   align-self: center;
   list-style: none;
   margin: 0 auto;
   max-width: 400px;
   padding-inline-start: 0px;
-}
-li {
-  display: inline;
 }
 }
 

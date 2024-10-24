@@ -1,0 +1,28 @@
+<h1><%= title %></h1>
+
+<!-- Flash Message -->
+<!-- <div class="flash-message">
+    %- flash_message %>
+</div> -->
+
+<!-- Register Form -->
+<form action="/account/register" method="post">
+    <div class="form-group">
+        <label for="name">First Name:</label>
+        <input type="text" id="name" name="account_firstname" required>
+    </div>
+    <div class="form-group">
+        <label for="name">Last Name:</label>
+        <input type="text" id="name" name="account_lastname" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="account_email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="account_password" pattern="(?=.*\d)(?=.*[A-Z]).{12,}" required>
+    </div>
+
+    <button type="submit">Register</button>
+</form>
