@@ -1,0 +1,12 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%# messages() %>
+
+<p>
+    @Html.ActionLink("Add New Classification", "AddNewClassification", "Inventory") |
+    @Html.ActionLink("Add New Inventory", "AddNewInventory", "Inventory")
+</p>

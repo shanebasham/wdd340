@@ -1,0 +1,111 @@
+<!-- view -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vehicle</title>
+    <link rel="stylesheet" href="path/to/your/css/styles.css">
+    <script src="path/to/your/js/validation.js" defer></script>
+</head>
+<body>
+
+<div class="container">
+    <!-- Display flash message if available -->
+    <?php if (isset($flash_message)) : ?>
+        <div class="alert alert-<?php echo $flash_message['type']; ?>">
+            <?php echo $flash_message['message']; ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Display validation errors if available -->
+    <?php if (validation_errors()) : ?>
+        <div class="alert alert-danger">
+            <?php echo validation_errors(); ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Add Vehicle Form -->
+    <form action="<?php echo base_url('inventory/add'); ?>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="make">Make:</label>
+            <input type="text" class="form-control" id="make" name="make" value="<?php echo set_value('make'); ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Model:</label>
+            <input type="text" class="form-control" id="model" name="model" value="<?php echo set_value('model'); ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="year">Year:</label>
+            <input type="number" class="form-control" id="year" name="year" value="<?php echo set_value('year'); ?>" required min="1886" max="<?php echo date('Y'); ?>">
+        </div>
+
+        <div class="form-group">
+            <label for="classification_id">Classification:</label>
+            <?php echo $classification_list; // This should be generated from Util.buildClassificationList() ?>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" required><?php echo set_value('description'); ?></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="image_path">Image Path:</label>
+            <input type="text" class="form-control" id="image_path" name="image_path" value="<?php echo set_value('image_path', 'path/to/no-image-available.jpg'); ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="thumbnail_path">Thumbnail Path:</label>
+            <input type="text" class="form-control" id="thumbnail_path" name="thumbnail_path" value="<?php echo set_value('thumbnail_path', 'path/to/no-image-available-thumb.jpg'); ?>" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Vehicle</button>
+    </form>
+</div>
+
+<script>
+    // Client-side validation function
+    function validateForm() {
+        const make = document.getElementById('make').value;
+        const model = document.getElementById('model').value;
+        const year = document.getElementById('year').value;
+        const description = document.getElementById('description').value;
+
+        if (!make || !model || !year || !description) {
+            alert("Please fill out all required fields.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>
+
+<!-- The form must send all data via a route and using the MVC architecture as with other processes? -->
+<!-- // routes/index.js
+const express = require('express');
+const router = express.Router();
+const DataModel = require('../models/dataModel');
+
+// GET home page
+router.get('/', (req, res) => {
+    res.render('index');
+});
+
+// POST data and render result
+router.post('/submit', (req, res) => {
+    const data = req.body.data;
+    const model = new DataModel(data);
+    res.render('result', { model: model });
+});
+
+module.exports = router; -->
+
+<!-- Using js the data must be written to the inventory table within the database using a model-based function? -->
+
+<!-- If the new inventory item is added successfully, a success message must be displayed in the management view. If successful, you can navigate through the appropriate navigation item to ensure the item appears in the inventory by classification view, and can be clicked to see all the item's details. -->
+<!-- If the new item fails to be added to the database, a failure message must be displayed in the add inventory view. -->
