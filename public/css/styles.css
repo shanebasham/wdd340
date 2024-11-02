@@ -93,10 +93,6 @@ h1 {
     height: auto;
     margin: auto;
 }
-.img:hover {
-    opacity: 1;
-    transform: scale(2.5);
-}
 h2 {
     text-align: center;
     color: black;
@@ -115,21 +111,9 @@ h3 {
     text-align: center;
 }
 
-footer {
-  font-family: "Comic Neue", Helvetica, sans-serif;
-  background-color: black;
-  color: white;
-  text-decoration: none;
-  padding: 25px;
-  margin: 0 auto;
-  border: 4px solid white;
-}
-footer p {
-  padding: 0px;
-  text-align: center;
-  background-color: black;
-  color: white;
-  text-decoration: none;
+div#messages {
+  margin-bottom: 200px;
+  color: red;
 }
 
 
@@ -150,11 +134,43 @@ footer p {
   margin: 20px;
 }
 
+ul#inv-display {
+  display: grid;
+  grid-template-columns: 25% 25% 25%;
+}
+
+ul#inv-display li {
+  border: solid 2px black;
+  background-color: lightgray;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+}
+
+footer {
+  font-family: "Comic Neue", Helvetica, sans-serif;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 25px;
+  margin: 0 auto;
+  margin-top: 50px;
+  border: 4px solid white;
+}
+footer p {
+  padding: 0px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+}
+
                   /* LOGIN */
 
 
 .flash-message {
-  margin-bottom: 20px;
+  margin-bottom: 200px;
   color: red; 
 }
 

@@ -37,4 +37,26 @@ async function getDataByInventoryId(inv_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getDataByInventoryId};
+// insert classification into database
+async function insertClassification(classification_name) {
+    try {
+      const query = 'INSERT INTO classifications (name) VALUES ($1)';
+      pool.query(query, [classification_name], (results) => {resolve(results);})
+    } catch (error) {
+      console.error("addnewclassification error " + error)
+      throw error
+    }
+};
+
+// insert inventory into database
+async function insertInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_color, inv_miles, classification_id) {
+  try {
+    const query = 'INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_color, inv_miles, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)';
+    pool.query(query, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_color, inv_miles, classification_id], (results) => {resolve(results);})
+  } catch (error) {
+    console.error("addnewinventory error " + error)
+    throw error
+  }
+};
+
+module.exports = {getClassifications, getInventoryByClassificationId, getDataByInventoryId, insertClassification, insertInventory};

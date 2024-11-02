@@ -1,93 +1,12 @@
-<!-- view -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Classification</title>
-    <script>
-        function validateForm() {
-            const classificationName = document.getElementById('classificationName').value;
-            const regex = /^[a-zA-Z0-9]+$/; // Allow only alphanumeric characters
-            if (!regex.test(classificationName)) {
-                alert("Classification name cannot contain spaces or special characters.");
-                return false;
-            }
-            return true;
-        }
-    </script>
-</head>
-<body>
-    <h1>Add New Classification</h1>
-    <form id="addClassificationForm" action="/classifications/add" method="POST" onsubmit="return validateForm()">
-        <label for="classificationName">Classification Name:</label>
-        <input type="text" id="classificationName" name="classificationName" required>
-        <button type="submit">Add Classification</button>
-    </form>
-    <% if (flashMessage) { %>
-        <div class="flash-message"><%= flashMessage %></div>
-    <% } %>
-    <% if (errors && errors.length > 0) { %>
-        <div class="error-messages">
-            <% errors.forEach(error => { %>
-                <p><%= error %></p>
-            <% }); %>
-        </div>
-    <% } %>
-</body>
-</html>
+<!-- Add classification view form -->
+<form id="addNewClassification" action="/inv/add-classification" method="post">
+    <div class="form-group">
+        <label for="name">Enter Classification Name:</label>
+        <input type="text" id="classificationName" name="classificationName" pattern="/^[a-zA-Z0-9]+$/" required>
+    </div>
+    <button type="submit">ADD</button>
+</form>
 
-<!-- route -->
-<!-- const express = require('express');
-const router = express.Router();
-const inventoryController = require('../controllers/inventoryController');
 
-// Route to render the add classification view
-router.get('/add', (req, res) => {
-    res.render('addClassification', { flashMessage: req.flash('message'), errors: req.flash('errors') });
-});
 
-// Route to handle form submission
-router.post('/add', inventoryController.addClassification);
-
-module.exports = router; -->
-
-<!-- controller -->
-<!-- const InventoryModel = require('../models/inventoryModel');
-
-exports.addClassification = async (req, res) => {
-    const classificationName = req.body.classificationName;
-
-    // Server-side validation
-    const regex = /^[a-zA-Z0-9]+$/;
-    if (!regex.test(classificationName)) {
-        req.flash('errors', ['Classification name cannot contain spaces or special characters.']);
-        return res.redirect('/classifications/add');
-    }
-
-    try {
-        const result = await InventoryModel.insertClassification(classificationName);
-        req.flash('message', 'Classification added successfully!');
-        // Emit an event or update the navigation bar here
-        return res.redirect('/management'); // Redirect to management view
-    } catch (error) {
-        req.flash('errors', [error.message]);
-        return res.redirect('/classifications/add');
-    }
-}; -->
-
-<!-- model -->
-<!-- const db = require('../config/database'); // Assuming you have a database connection setup
-
-exports.insertClassification = (classificationName) => {
-    return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO classifications (name) VALUES (?)';
-        db.query(query, [classificationName], (error, results) => {
-            if (error) {
-                return reject(error);
-            }
-            resolve(results);
-        });
-    });
-}; -->
 
