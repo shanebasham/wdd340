@@ -1,9 +1,9 @@
 <h1><%= title %></h1>
 
 <!-- Flash Message -->
-<!-- <div class="flash-message">
-    %- flash_message %>
-</div> -->
+<div class="flash-message">
+    <%- messages() %>
+</div>
 
 <!-- Login Form -->
 <form id="loginForm" action="/account/login" method="post">

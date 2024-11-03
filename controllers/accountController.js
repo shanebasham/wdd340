@@ -103,11 +103,6 @@ async function loginAccount(req, res) {
     let nav = await utilities.getNav()
     const { account_email, account_password } = req.body
     const accountData = await accountModel.getAccountByEmail(account_email)
-    res.render("account/management", {
-        title: "Account Management",
-        nav,
-        errors: null,
-      })
     if (!accountData) {
       req.flash("notice", "Please check your credentials and try again.")
       res.status(400).render("account/login", {
@@ -193,23 +188,9 @@ async function updateAccount(req, res) {
  *  Process logout request
  * ************************************ */
  async function logoutAccount(req, res) {
-    let nav = await utilities.getNav()
-    try {
-        res.status(201).render("account/login", {
-            title: "Login",
-            nav,
-          })
-        if (data.status === "success") {
-            res.status(201).render("account/login", {
-                title: "Login",
-                nav,
-              })
-        } else {
-            console.error(data.message);
-        }
-    } catch (error) {
-        console.error("Logout failed:", error);
-    }
+    res.clearCookie("jwt")
+    res.locals.loggedin = null
+    return res.redirect("/")
 }
 
 module.exports = { buildLogin, buildRegister, buildUpdate, buildManagement, registerAccount, loginAccount, updateAccount, logoutAccount }

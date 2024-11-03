@@ -27,8 +27,7 @@ router.post(
   )
 
 // Route to build management view
-router.get("/management", utilities.handleErrors(accountController.buildManagement))
-// router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 
 // Route to build update view
 router.get("/update", utilities.handleErrors(accountController.buildUpdate))

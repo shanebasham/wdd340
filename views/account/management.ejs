@@ -1,11 +1,13 @@
 <h1><%= title %></h1>
 
 <!-- Flash Message -->
-<!-- <div class="flash-message">
-    %- flash_message %>
-</div> -->
+<div class="flash-message">
+    <%- messages() %>
+</div>
 
 <h2>You're logged in</h2>
+
+<a href="/account/update">Update Account Information</a>
 
 <form action="/account/management" method="post">
     <button type="submit">Log Out</button>
