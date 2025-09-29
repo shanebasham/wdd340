@@ -1,0 +1,35 @@
+<h2>Contact Details</h2>
+<div class="row">
+  <div class="col-xs-12">
+    <img [src]="" alt="" class="img-responsive"/>
+  </div>
+</div>
+<!-- <div class="row">
+  <div class="col-xs-12">
+    <h1>Contact Name: {{ contact.name }}</h1>
+    <h3>Contact Email: {{ contact.email }}</h3>
+    <h3>Contact Phone Number: {{ contact.phone }}</h3>
+  </div>
+</div> -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle"
+            (click)="toggleDropdown()">
+            Manage Contact <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" [class.show]="isDropdownOpen" [style.display]="isDropdownOpen ? 'block' : 'none'">
+            <li><a href="#">Edit Contact</a></li>
+            <li><a href="#">Delete Contact</a></li>
+        </ul>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Name: </h1>
+    <h3>Email: </h3>
+    <h3>Phone Number: </h3>
+  </div>
+</div>

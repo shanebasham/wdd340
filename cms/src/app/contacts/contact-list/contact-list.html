@@ -1,0 +1,20 @@
+<h2>Contact List</h2>
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success">New Contact</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <a href="#" class="list-group-item clearfix" *ngFor="let contact of contacts">
+      <span class="pull-left">
+        <h4 class="list-group-item-heading">{{ contact.name }}</h4>
+        <p class="list-group-item-text">{{ contact.email }}</p>
+      </span>
+      <span class="pull-right">
+        <img [src]="contact.imagePath" alt="{{ contact.name }}" width="50" height="50"/>
+      </span>
+    </a>
+  </div>
+</div>
