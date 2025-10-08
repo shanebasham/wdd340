@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Contact } from '../contact.model';
 
 @Component({
   selector: 'app-contact-detail',
@@ -12,4 +14,6 @@ export class ContactDetail {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+
+  @Input() contact: Contact;
 }

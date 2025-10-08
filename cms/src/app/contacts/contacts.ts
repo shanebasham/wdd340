@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
+
+import { Contact } from './contact.model';
 
 @Component({
   selector: 'app-contacts',
@@ -8,5 +10,10 @@ import { Component } from '@angular/core';
 })
 
 export class Contacts {
+  @Output() selectedContact: Contact;
 
+  onContactSelected(contact: Contact) {
+    this.selectedContact = contact;
+    console.log("contact received by parent component");
+  }
 }

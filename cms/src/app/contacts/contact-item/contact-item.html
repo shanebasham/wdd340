@@ -1,0 +1,9 @@
+<a href="#" class="list-group-item clearfix" (click)="onSelected(contact)">
+    <span class="pull-left">
+        <h4 class="list-group-item-heading">{{ contact.name }}</h4>
+        <p class="list-group-item-text">{{ contact.email }}</p>
+    </span>
+    <span class="pull-right">
+        <img [src]="contact.imagePath" alt="{{ contact.name }}" width="50" height="50"/>
+    </span>
+</a>

@@ -1,18 +1,6 @@
 <h2>Contact Details</h2>
 <div class="row">
   <div class="col-xs-12">
-    <img [src]="" alt="" class="img-responsive"/>
-  </div>
-</div>
-<!-- <div class="row">
-  <div class="col-xs-12">
-    <h1>Contact Name: {{ contact.name }}</h1>
-    <h3>Contact Email: {{ contact.email }}</h3>
-    <h3>Contact Phone Number: {{ contact.phone }}</h3>
-  </div>
-</div> -->
-<div class="row">
-  <div class="col-xs-12">
     <div class="btn-group">
         <button type="button" class="btn btn-primary dropdown-toggle"
             (click)="toggleDropdown()">
@@ -28,8 +16,14 @@
 <hr>
 <div class="row">
   <div class="col-xs-12">
-    <h1>Name: </h1>
-    <h3>Email: </h3>
-    <h3>Phone Number: </h3>
+    <img [src]="contact.imagePath" alt="{{contact.name}}" class="img-responsive"/>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{contact.name}}</h1>
+    <h3>{{contact.email}}</h3>
+    <h3>{{contact.phone}}</h3>
   </div>
 </div>
