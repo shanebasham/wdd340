@@ -17,6 +17,7 @@ import { Messsages } from './messsages/messsages';
 import { MessageList } from './messsages/message-list/message-list';
 import { MessageItem } from './messsages/message-item/message-item';
 import { MessageEdit } from './messsages/message-edit/message-edit';
+import { DropdownDirective } from './shared/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MessageEdit } from './messsages/message-edit/message-edit';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    DropdownDirective
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
