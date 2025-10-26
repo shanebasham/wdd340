@@ -9,16 +9,16 @@
          <div class="panel-body">
             <div class="row">
                <div class="col-xs-12">
-                    <app-message-item 
-                        *ngFor="let message of messages" 
-                        [message]="message"
-                        (click)="onSelected(message)">
-                    </app-message-item>
+                  <app-message-item
+                     *ngFor="let message of messages"
+                     [message]="message"
+                     (selectedContactEvent)="onMessageSelected($event)">
+                  </app-message-item>
                </div>
             </div>
          </div>
          <div class="panel-footer">
-            <app-message-edit (addMessageEvent)="onAddMessage($event)"></app-message-edit>
+            <app-message-edit></app-message-edit>
          </div>
       </div>
    </div>

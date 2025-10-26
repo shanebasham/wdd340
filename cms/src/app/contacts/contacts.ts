@@ -1,6 +1,6 @@
-import { Component, Output } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { Contact } from './contact.model';
+import { ContactService } from './contact.service';
 
 @Component({
   selector: 'app-contacts',
@@ -9,8 +9,17 @@ import { Contact } from './contact.model';
   styleUrl: './contacts.css'
 })
 
-export class Contacts {
-  @Output() selectedContact: Contact;
+export class Contacts implements OnInit {
+  selectedContact?: Contact;
+
+  constructor(private contactService: ContactService) {}
+
+  ngOnInit(): void {
+    this.contactService.contactSelectedEvent.subscribe((contact: Contact) => {
+      this.selectedContact = contact;
+      console.log('contact received by parent component', contact);
+    });
+  }
 
   onContactSelected(contact: Contact) {
     this.selectedContact = contact;

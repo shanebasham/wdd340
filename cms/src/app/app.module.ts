@@ -13,11 +13,12 @@ import { Documents } from './documents/documents';
 import { DocumentList } from './documents/document-list/document-list';
 import { DocumentItem } from './documents/document-item/document-item';
 import { DocumentDetail } from './documents/document-detail/document-detail';
-import { Messsages } from './messsages/messsages';
-import { MessageList } from './messsages/message-list/message-list';
-import { MessageItem } from './messsages/message-item/message-item';
-import { MessageEdit } from './messsages/message-edit/message-edit';
+import { Messages } from './messages/messages';
+import { MessageList } from './messages/message-list/message-list';
+import { MessageItem } from './messages/message-item/message-item';
+import { MessageEdit } from './messages/message-edit/message-edit';
 import { DropdownDirective } from './shared/dropdown.directive';
+import { ContactService } from './contacts/contact.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
     DocumentList,
     DocumentItem,
     DocumentDetail,
-    Messsages,
+    Messages,
     MessageList,
     MessageItem,
     MessageEdit
@@ -43,7 +44,8 @@ import { DropdownDirective } from './shared/dropdown.directive';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection()
+    provideZonelessChangeDetection(),
+    ContactService
   ],
   bootstrap: [App]
 })

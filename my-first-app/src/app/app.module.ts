@@ -7,7 +7,7 @@ import { Server } from './server/server.component';
 import { Servers } from './servers/servers';
 import { WarningAlert } from './warning-alert/warning-alert';
 import { SuccessAlert } from './success-alert/success-alert';
-import { ContactItem } from './contact-item/contact-item';
+// import { ContactItem } from './contact-item/contact-item';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { ContactItem } from './contact-item/contact-item';
     Servers,
     WarningAlert,
     SuccessAlert,
-    ContactItem
+    // ContactItem
   ],
   imports: [
     BrowserModule,
