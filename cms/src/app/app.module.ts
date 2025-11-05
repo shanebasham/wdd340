@@ -14,11 +14,17 @@ import { DocumentList } from './documents/document-list/document-list';
 import { DocumentItem } from './documents/document-item/document-item';
 import { DocumentDetail } from './documents/document-detail/document-detail';
 import { Messages } from './messages/messages';
+import { MessageDetail } from './messages/message-detail/message-detail';
 import { MessageList } from './messages/message-list/message-list';
 import { MessageItem } from './messages/message-item/message-item';
 import { MessageEdit } from './messages/message-edit/message-edit';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ContactService } from './contacts/contact.service';
+import { AppRoutingModule } from './app-routing.module';
+import { DocumentEdit } from './documents/document-edit/document-edit';
+import { DocumentStart } from './documents/document-start/document-start';
+import { ContactStart } from './contacts/contact-start/contact-start';
+import { ContactEdit } from './contacts/contact-edit/contact-edit';
 
 @NgModule({
   declarations: [
@@ -33,14 +39,20 @@ import { ContactService } from './contacts/contact.service';
     DocumentItem,
     DocumentDetail,
     Messages,
+    MessageDetail,
     MessageList,
     MessageItem,
-    MessageEdit
+    MessageEdit,
+    DocumentEdit,
+    DocumentStart,
+    ContactStart,
+    ContactEdit
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    DropdownDirective
+    DropdownDirective,
+    AppRoutingModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

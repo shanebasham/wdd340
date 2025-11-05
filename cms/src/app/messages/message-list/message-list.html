@@ -12,7 +12,7 @@
                   <app-message-item
                      *ngFor="let message of messages"
                      [message]="message"
-                     (selectedContactEvent)="onMessageSelected($event)">
+                     (click)="onSelectedMessage(message)">
                   </app-message-item>
                </div>
             </div>

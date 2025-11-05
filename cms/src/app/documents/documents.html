@@ -4,14 +4,7 @@
       <app-document-list></app-document-list>
     </div>
     <div class="col-md-6">
-      <app-document-detail
-        *ngIf="selectedDocument"
-        [document]="selectedDocument">
-      </app-document-detail>
-
-      <ng-template #noDocumentSelected>
-        <p>Please select a document to view details.</p>
-      </ng-template>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

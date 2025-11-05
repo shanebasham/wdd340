@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Document } from '../document.model';
 
@@ -9,6 +9,10 @@ import { Document } from '../document.model';
   styleUrl: './document-item.css'
 })
 
-export class DocumentItem {
-  @Input() document!: Document;
+export class DocumentItem implements OnInit{
+  @Input() document: Document;
+  @Input() index: number;
+
+  ngOnInit() {
+  }
 }

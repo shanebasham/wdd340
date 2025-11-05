@@ -1,15 +1,19 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-19">
       <app-message-list></app-message-list>
     </div>
+    <div class="col-md-6">
+      <app-message-detail 
+        *ngIf="selectedMessage; else noMessageSelected" 
+        [message]="selectedMessage">
+      </app-message-detail>
 
-    <div class="col-md-4">
-      <ng-container *ngIf="selectedMessage; else noMessageSelected">
+      <!-- <ng-container *ngIf="selectedMessage; else noMessageSelected">
         <h3>{{ selectedMessage.subject }}</h3>
         <p>{{ selectedMessage.msgText }}</p>
         <p><strong>From:</strong> {{ contactService.getContact(selectedMessage.sender)?.name }}</p>
-      </ng-container>
+      </ng-container> -->
 
       <ng-template #noMessageSelected>
         <p>Please select a message to view details.</p>
@@ -17,3 +21,4 @@
     </div>
   </div>
 </div>
+

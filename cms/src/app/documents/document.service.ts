@@ -9,14 +9,20 @@ import {MOCKDOCUMENTS} from './MOCKDOCUMENTS';
 export class DocumentService {
   documents: Document [] =[];
   documentSelectedEvent = new EventEmitter<Document>();
+  documentChangedEvent = new EventEmitter<Document[]>();
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
   }
 
-  getDocuments(): Document[] {
+  getDocuments() {
     return this.documents.slice();
   }
+
+  // getDocument(index: number) {
+  //   return this.documents[index];
+  // }
+
   getDocument(id: string): Document | null {
     for (const document of this.documents) {
       if (String(document.id) === id) {
@@ -24,5 +30,16 @@ export class DocumentService {
       }
     }
     return null;
+  }
+  deleteDocument(document: Document) {
+    if (!document) {
+        return;
+    }
+    const pos = this.documents.indexOf(document);
+    if (pos < 0) {
+        return;
+    }
+    this.documents.splice(pos, 1);
+    this.documentChangedEvent.emit(this.documents.slice());
   }
 }

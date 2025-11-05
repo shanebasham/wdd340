@@ -6,9 +6,9 @@
             (click)="toggleDropdown()">
             Manage Contact <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" [class.show]="isDropdownOpen" [style.display]="isDropdownOpen ? 'block' : 'none'">
-            <li><a href="#">Edit Contact</a></li>
-            <li><a href="#">Delete Contact</a></li>
+        <ul class="dropdown-menu" [class.show]="isDropdownOpen" style="cursor: pointer;" [style.display]="isDropdownOpen ? 'block' : 'none'">
+            <li><a style="cursor: pointer;" (click)="onEditContact()">Edit Contact</a></li>
+            <li><a style="cursor: pointer;" (click)="onDelete()">Delete Contact</a></li>
         </ul>
     </div>
   </div>

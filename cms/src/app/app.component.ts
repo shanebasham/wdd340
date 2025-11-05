@@ -8,9 +8,10 @@ import { Component, signal } from '@angular/core';
 })
 
 export class App {
-  selectedFeature: string = 'documents';
+  loadedFeature = 'document';
 
-  switchView(selectedFeature: string) {
-    this.selectedFeature = selectedFeature;
+  onNavigate(feature: string) {
+    this.loadedFeature = feature;
   }
+
 }

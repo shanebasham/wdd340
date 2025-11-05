@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Document } from './document.model';
 import { DocumentService } from './document.service';
 
@@ -6,19 +7,28 @@ import { DocumentService } from './document.service';
   selector: 'app-documents',
   standalone: false,
   templateUrl: './documents.html',
-  styleUrl: './documents.css'
+  styleUrl: './documents.css',
+  providers: [DocumentService]
 })
 export class Documents implements OnInit {
-  selectedDocument?: Document;
+  selectedDocument: Document;
 
   constructor(private documentService: DocumentService) {}
 
-  ngOnInit(): void {
-    this.documentService.documentSelectedEvent.subscribe((document: Document) => {
-      this.selectedDocument = document;
-      console.log('document received by parent component', document);
-    });
-  }
+  ngOnInit() {
+      this.documentService.documentSelectedEvent
+        .subscribe(
+          (document: Document) => {
+            this.selectedDocument = document;
+          }
+        );
+    }
+  // ngOnInit() {
+  //   this.documentService.documentSelectedEvent.subscribe((document: Document) => {
+  //     this.selectedDocument = document;
+  //     console.log('document received by parent component', document);
+  //   });
+  // }
   onDocumentSelected(document: Document) {
     this.selectedDocument = document;
     console.log("document received by parent component");

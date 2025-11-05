@@ -10,16 +10,24 @@ import { ContactService } from './contact.service';
 })
 
 export class Contacts implements OnInit {
-  selectedContact?: Contact;
+  selectedContact: Contact;
 
   constructor(private contactService: ContactService) {}
 
-  ngOnInit(): void {
-    this.contactService.contactSelectedEvent.subscribe((contact: Contact) => {
-      this.selectedContact = contact;
-      console.log('contact received by parent component', contact);
-    });
-  }
+  // ngOnInit(): void {
+  //   this.contactService.contactSelectedEvent.subscribe((contact: Contact) => {
+  //     this.selectedContact = contact;
+  //     console.log('contact received by parent component', contact);
+  //   });
+  // }
+  ngOnInit() {
+      this.contactService.contactSelectedEvent
+        .subscribe(
+          (contact: Contact) => {
+            this.selectedContact = contact;
+          }
+        );
+    }
 
   onContactSelected(contact: Contact) {
     this.selectedContact = contact;

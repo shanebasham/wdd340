@@ -4,14 +4,7 @@
       <app-contact-list></app-contact-list>
     </div>
     <div class="col-md-7">
-      <app-contact-detail 
-        *ngIf="selectedContact; else noContactSelected" 
-        [contact]="selectedContact">
-      </app-contact-detail>
-
-      <ng-template #noContactSelected>
-        <p>Please select a contact to view details.</p>
-      </ng-template>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
