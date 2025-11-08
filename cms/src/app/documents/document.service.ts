@@ -20,7 +20,7 @@ export class DocumentService {
     this.maxDocumentId = this.getMaxId();
   }
 
-  getDocuments() {
+  getDocuments(): Document[] {
     return this.documents.slice();
   }
   getDocument(id: string): Document | null {
@@ -65,7 +65,7 @@ export class DocumentService {
   deleteDocument(document: Document) {
     if (!document) {
         return;
-    }   
+    }
     const pos = this.documents.indexOf(document);
     if (pos < 0) {
         return;

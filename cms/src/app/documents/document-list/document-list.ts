@@ -13,7 +13,7 @@ import { DocumentService } from '../document.service';
 })
 
 export class DocumentList implements OnInit, OnDestroy {
-  documents: Document[];
+  documents: Document[] = [];
   private subscription: Subscription;
   
 
@@ -26,6 +26,12 @@ export class DocumentList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.documents = this.documentService.getDocuments();
+    this.documentService.documentChangedEvent
+      .subscribe(
+        (documents: Document[]) => {
+          this.documents = documents;
+        }
+      );
     this.subscription = this.documentService.documentListChangedEvent
       .subscribe(
         (documentsList: Document[]) => {
