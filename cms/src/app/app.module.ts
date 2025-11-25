@@ -1,6 +1,7 @@
 import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 import { App } from './app.component';
 
@@ -25,6 +26,7 @@ import { DocumentEdit } from './documents/document-edit/document-edit';
 import { DocumentStart } from './documents/document-start/document-start';
 import { ContactStart } from './contacts/contact-start/contact-start';
 import { ContactEdit } from './contacts/contact-edit/contact-edit';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ContactEdit } from './contacts/contact-edit/contact-edit';
     BrowserModule,
     FormsModule,
     DropdownDirective,
-    AppRoutingModule
+    AppRoutingModule,
+    CdkDropList,
+    CdkDrag
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

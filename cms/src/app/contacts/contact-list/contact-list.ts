@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-contact-list',
@@ -19,9 +20,7 @@ export class ContactList implements OnInit, OnDestroy {
   constructor(private contactService: ContactService,
               private router: Router,
               private route: ActivatedRoute 
-  ) {
-    this.contacts = this.contactService.getContacts();
-  }
+  ) {}
   
   ngOnInit(): void {
     this.contacts = this.contactService.getContacts();
@@ -44,5 +43,10 @@ export class ContactList implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+  drop(event: CdkDragDrop<Contact[]>) {
+    const draggedContact: Contact = event.item.data;
+    this.contactService.addToGroup(draggedContact);
+    console.log('Dropped contact:', draggedContact);
   }
 }

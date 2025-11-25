@@ -1,12 +1,16 @@
-<a style="cursor: pointer;" 
+<a
+    style="cursor: pointer;"
+    [routerLink]="['/contacts', contact.id]"
+    routerLinkActive="active"
+    cdkDrag
+    [cdkDragData]="contact"
     class="list-group-item clearfix"
-    [routerLink]="['/contacts', contact.id]" 
-    routerLinkActive="active">
-    <span class="pull-left">
-        <h4 class="list-group-item-heading">{{ contact.name }}</h4>
-        <p class="list-group-item-text">{{ contact.email }}</p>
-    </span>
-    <span class="pull-right">
-        <img [src]="contact.imageUrl" alt="{{ contact.name }}" width="50" height="50"/>
-    </span>
-</a>
+>
+  <span class="pull-left">
+    <h4 class="list-group-item-heading">{{ contact.name }}</h4>
+    <p class="list-group-item-text">{{ contact.email }}</p>
+  </span>
+  <span class="pull-right">
+    <img [src]="contact.imageUrl" alt="{{ contact.name }}" width="50" height="50"/>
+  </span>
+  </a>
