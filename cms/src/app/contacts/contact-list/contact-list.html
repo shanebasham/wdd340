@@ -1,19 +1,42 @@
-<h2>Contact List</h2>
-<div class="row">
-  <div class="col-xs-12">
-    <button class="btn btn-success" (click)="onNewContact()">New Contact</button>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row pad-left-right">
+      <span class="pull-left title">Contacts</span>
+      <div class="pull-right pad-left-right">
+        <a class="btn btn-success" [routerLink]="['new']">New Contact</a>
+      </div>
+      <div class="input-group col-xs-10">
+        <input
+          #searchBox
+          type="text"
+          class="form-control"
+          placeholder="Enter a search value"
+          (keyup.enter)="search(searchBox.value)"
+          >
+        <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)"></div>
+      </div>
+    </div>
   </div>
 </div>
 <hr>
 <div class="row">
   <div class="list-group">
-    <div 
+    <div>
+    <!-- <div 
     cdkDropList 
     [cdkDropListData]="contacts" 
-    (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let contact of contacts" cdkDrag [cdkDragData]="contact" class="list-contact clearfix">
-          <app-contact-item [contact]="contact"></app-contact-item>
+    (cdkDropListDropped)="drop($event)"> -->
+      <!-- <div *ngFor="let contact of contacts$ | async | contactsFilter: term" cdkDrag [cdkDragData]="contact" class="list-contact clearfix"> -->
+      <div class="center-panel" *ngIf="contacts$ | async as contacts">
+          <app-contact-item 
+            *ngFor="let contactEl of contacts | contactsFilter: term; let i = index" 
+            [contact]="contactEl"
+            [index]="i">
+          </app-contact-item>
       </div>
+      <p *ngIf="!contacts && contacts.length === 0">
+        No contacts found.
+      </p>
     </div>
   </div>
 </div>

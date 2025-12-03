@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
+import { DataStorageService } from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-document-list',
@@ -14,38 +15,49 @@ import { DocumentService } from '../document.service';
 
 export class DocumentList implements OnInit, OnDestroy {
   documents: Document[] = [];
-  private subscription: Subscription;
-  
+  subscription: Subscription;
+  documents$!: Observable<Document[]>;
 
-  constructor(private documentService: DocumentService,
+  constructor(private dataStorageService: DataStorageService,
+              private documentService: DocumentService,
               private router: Router,
-              private route: ActivatedRoute) 
-  {
-    this.documents = this.documentService.getDocuments();
-  }
+              private route: ActivatedRoute,
+              private zone: NgZone) {}
 
-  ngOnInit(): void {
-    this.documents = this.documentService.getDocuments();
-    this.documentService.documentChangedEvent
-      .subscribe(
-        (documents: Document[]) => {
-          this.documents = documents;
-        }
-      );
-    this.subscription = this.documentService.documentListChangedEvent
-      .subscribe(
-        (documentsList: Document[]) => {
-          this.documents = documentsList;
-        }
-      );
+
+  ngOnInit() {
+    this.documents$ = this.dataStorageService.fetchDocuments();
   }
+  //   this.dataStorageService.fetchDocuments().subscribe(
+  //     (docs) => {
+  //       // Ensure Angular change detection runs
+  //       this.zone.run(() => {
+  //         console.log("Documents fetched on init:", docs);
+  //         this.documents = docs;
+  //       });
+  //     },
+  //     (error) => console.error("Error fetching documents on init:", error)
+  //   );
+  // }
+  // ngOnInit() {
+  //   this.subscription = this.documentService.documentsChanged
+  //     .subscribe(
+  //       (documents: Document[]) => {
+  //         this.documents = documents;
+  //       }
+  //     );
+  //   this.documents = this.documentService.getDocuments();
+  // }
+
 
   onNewDocument() {
     // this.router.navigate(['new'], {relativeTo: this.route});
     this.router.navigate(['/documents', 'new'], {relativeTo: this.route});
   }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
+

@@ -10,9 +10,10 @@ import { Contact } from '../contact.model';
 })
 
 export class ContactItem implements OnInit{
-  @Input() contact: Contact;
-  @Input() index: number;
+  @Input() contact!: Contact;
+  @Input() index!: number;
   
   ngOnInit() {
+    console.log("Rendering contact item:", this.contact);
   }
 }

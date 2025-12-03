@@ -1,7 +1,8 @@
 import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { HttpClientModule } from '@angular/common/http';
 
 import { App } from './app.component';
 
@@ -21,11 +22,14 @@ import { MessageItem } from './messages/message-item/message-item';
 import { MessageEdit } from './messages/message-edit/message-edit';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ContactService } from './contacts/contact.service';
+import { DocumentService } from './documents/document.service';
+import { MessageService } from './messages/message.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DocumentEdit } from './documents/document-edit/document-edit';
 import { DocumentStart } from './documents/document-start/document-start';
 import { ContactStart } from './contacts/contact-start/contact-start';
 import { ContactEdit } from './contacts/contact-edit/contact-edit';
+import { ContactsFilterPipe } from './contacts/contacts-filter-pipe';
 
 
 @NgModule({
@@ -48,20 +52,25 @@ import { ContactEdit } from './contacts/contact-edit/contact-edit';
     DocumentEdit,
     DocumentStart,
     ContactStart,
-    ContactEdit
+    ContactEdit,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     DropdownDirective,
     AppRoutingModule,
     CdkDropList,
-    CdkDrag
+    CdkDrag,
+    HttpClientModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    ContactService
+    ContactService,
+    DocumentService,
+    MessageService
   ],
   bootstrap: [App]
 })

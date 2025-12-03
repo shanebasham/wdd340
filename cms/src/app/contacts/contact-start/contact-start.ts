@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './contact-start.css'
 })
 export class ContactStart implements OnInit {
+  
   constructor() { }
+
   ngOnInit() {
   }
 }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
-import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-document-edit',
@@ -13,45 +12,58 @@ import { NgForm } from '@angular/forms';
 })
 
 export class DocumentEdit implements OnInit {
-  id: string;
-  originalDocument: Document;
-  document: Document;
-  editMode: boolean = false;
+  id: number;
+  editMode = false;
+  documentForm: FormGroup
 
-  constructor(private route: ActivatedRoute,
-              private documentService: DocumentService,
-              private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private documentService: DocumentService,
+    private router: Router) {}
 
   ngOnInit() {
-    this.route.params
-      .subscribe(
-          (params: Params) => {
-            this.id = params['id'];
-            if (this.id == null) {
-              this.editMode = false;
-              return;
-            }
-            this.originalDocument = this.documentService.getDocument(this.id);
-            if (this.originalDocument == null) {
-              return;
-            }
-            this.editMode = true;
-            this.document = JSON.parse(JSON.stringify(this.originalDocument));
-            this.editMode = params['id'] != null;
-          }
-        ); 
+    this.route.params.subscribe((params: Params) => {
+        this.id = +params['id'];
+        this.editMode = params['id'] != null;
+        this.initForm();
+    });
   }
-  onSubmit(form: NgForm) {
-    const value = form.value;
-    const newDocument = new Document('', value.name, value.description, value.url);
+  onSubmit() {
     if (this.editMode) {
-      this.documentService.updateDocument(this.originalDocument, newDocument);
+      this.documentService.updateDocument(this.id, this.documentForm.value);
     } else {
-      this.documentService.addDocument(newDocument);
+      this.documentService.addDocument(this.documentForm.value);
     }
-    this.router.navigate(['/documents']);
+    this.onCancel();
   }
   onCancel() {
-    this.router.navigate(['/documents']);
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+  private initForm() {
+    let documentName = '';
+    let documentUrl = '';
+    let documentDescription = '';
+
+    if (this.editMode) {
+      const document = this.documentService.getDocument(this.id);
+      documentName = document.name;
+      documentUrl = document.url;
+      documentDescription = document.description;
+    }
+
+    this.documentForm = new FormGroup({
+      name: new FormControl(documentName, Validators.required),
+      url: new FormControl(documentUrl, Validators.required),
+      description: new FormControl(documentDescription, Validators.required)
+    });
+  }
+  get name() {
+    return this.documentForm.get('name');
+  }
+  get description() {
+    return this.documentForm.get('description');
+  }
+  get url() {
+    return this.documentForm.get('url');
   }
 }

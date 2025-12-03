@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Contact } from '../contact.model';
@@ -13,20 +13,13 @@ import { ContactService } from '../contact.service';
 
 export class ContactDetail implements OnInit{
   contact: Contact;
-  id: string;
+  id: number;
+  isDropdownOpen = false;
 
   constructor(private contactService: ContactService,
               private route: ActivatedRoute,
               private router: Router
   ) {}
-
-  isDropdownOpen = false;
-
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  // @Input() contact: Contact;
 
   ngOnInit() {
     this.route.params
@@ -40,7 +33,10 @@ export class ContactDetail implements OnInit{
     this.router.navigate(['/contacts', this.id, 'edit']);
   }
   onDelete() {
-    this.contactService.deleteContact(this.contact);
+    this.contactService.deleteContact(this.id);
     this.router.navigate(['/contacts']);  
+  }
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

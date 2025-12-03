@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-body">
-        <form id="document-edit">
+        <form id="message-edit" [formGroup]="messageForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-sm-12 form-group">
                     <label for="subject">Subject</label>
@@ -8,9 +8,11 @@
                     type="text"
                     id="subject"
                     class="form-control"
+                    formControlName="subject"
                     size="120"
                     max="120"
-                    #subject>
+                    name="subject"
+                    required>
                 </div>
 
                 <div class="col-sm-12 form-group">
@@ -19,14 +21,31 @@
                     type="text"
                     id="message"
                     class="form-control"
+                    formControlName="msgText"
                     max="255"
                     size="120"
-                    #msgText>
+                    name="message"
+                    required>
                 </div>
             </div>
+
+            <div>
+                <div *ngIf="subject?.invalid && (subject?.dirty || subject?.touched)" class="alert alert-danger">
+                    <div *ngIf="subject?.errors?.['required']">
+                        Subject is required.
+                    </div>
+                </div>
+
+                <div *ngIf="message?.invalid && (message?.dirty || message?.touched)" class="alert alert-danger">
+                    <div *ngIf="message?.errors?.['required']">
+                        Message is required.
+                    </div>
+                </div>
+            </div>
+            
             <div class="row">
-                <div class="col-xs-12">
-                    <button class="btn btn-success" type="button" (click)="onSendMessage()">Send</button>
+                <div class="col-xs-12 btn-toolbar">
+                    <button class="btn btn-success" type="button" (click)="onSubmit()">Send</button>
                     <button class="btn btn-danger" type="button" (click)="onClear()">Clear</button>
                 </div>
             </div>

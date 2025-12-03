@@ -6,11 +6,15 @@
     </div>
   </div>
   <div class="panel-body">
-    <div class="center-panel">
+    <div class="center-panel" *ngIf="documents$ | async as documents">
       <app-document-item
         *ngFor="let documentEl of documents; let i = index"
         [document]="documentEl"
-        [index]="i"></app-document-item>
+        [index]="i">
+      </app-document-item>
     </div>
+    <p *ngIf="!documents && documents.length === 0">
+      No documents found.
+    </p>
   </div>
 </div>

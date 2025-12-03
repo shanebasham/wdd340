@@ -7,7 +7,7 @@ import { Component, OnInit} from '@angular/core';
   styleUrl: './document-start.css'
 })
 export class DocumentStart implements OnInit {
-
+ 
   constructor() {}
 
   ngOnInit() {

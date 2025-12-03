@@ -1,7 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-body">
-
-    <form id="document-edit" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <form id="document-edit" [formGroup]="documentForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="name">Document Title:</label>
@@ -9,28 +8,27 @@
             type="text"
             id="name"
             class="form-control"
+            formControlName="name"
             size="120"
             max="120"
             name="name"
-            [ngModel]=document?.name
-            required
-            #name="ngModel">
+            required>
         </div>
       </div>
 
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-sm-12 form-group">
           <label for="description">Document Description:</label>
           <input
             type="text"
             id="description"
             class="form-control"
+            formControlName="description"
             size="120"
             max="255"
-            name="description"
-            [ngModel]=document?.description>
+            name="description">
         </div>
-      </div> -->
+      </div>
 
       <div class="row">
         <div class="col-sm-12 form-group">
@@ -39,12 +37,11 @@
             type="text"
             id="url"
             class="form-control"
+            formControlName="url"
             size="150"
             max="255"
             name="url"
-            [ngModel]=document?.url
-            required
-            #url="ngModel">
+            required>
         </div>
       </div>
 
@@ -64,13 +61,12 @@
 
       <div class="row">
         <div class="col-xs-12 btn-toolbar">
-          <button class="btn btn-success" type="submit" *ngIf="f.valid">Save</button>
-          <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+          <button class="btn btn-success" type="submit" [disabled]="!documentForm.valid">Save</button>
+          <button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
         </div>
       </div>
 
     </form>
-
   </div>
 </div>
 

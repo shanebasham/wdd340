@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+
 import { Message } from '../message.model';
-import { Contact } from '../../contacts/contact.model';
-import { MessageService } from '../message.service';
 import { ContactService } from '../../contacts/contact.service';
 
 @Component({
@@ -11,28 +10,23 @@ import { ContactService } from '../../contacts/contact.service';
   styleUrl: './message-item.css'
 })
 
-// export class MessageItem {
-//   @Input() message!: Message;
-//   messageSender: string = '';
-// }
-
 export class MessageItem implements OnInit {
-  @Input() message: Message;
-  @Output() selectedMessageEvent = new EventEmitter<void>();
-  messageSender: string = '';
+  @Input() message!: Message;
+  @Input() index!: number;
+  messageSender: string = 'Unknown';
 
   constructor(
-    private contactService: ContactService,
-    private messageService: MessageService
+    private contactService: ContactService
   ) {}
 
   ngOnInit() {
-    const contact = this.contactService.getContact(this.message.sender);
-    this.messageSender = contact?.name || 'Unknown';
-   }
+  const senderIndex = Number(this.message.sender);
 
-  onSelected(message: Message) {
-    this.selectedMessageEvent.emit(); 
-    console.log(message);
+  const contacts = this.contactService.getContacts();
+  this.messageSender = contacts[senderIndex] ? contacts[senderIndex].name : 'Unknown';
+  
+  const senderLower = this.message.sender.toLowerCase();
+          if (senderLower === 'you') {
+            this.messageSender = 'You';}
   }
 }

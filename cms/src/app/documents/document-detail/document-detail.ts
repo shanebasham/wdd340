@@ -14,7 +14,7 @@ import { WindRefService } from '../../wind-ref.service';
 
 export class DocumentDetail implements OnInit {
   document: Document;
-  id: string;
+  id: number;
   nativeWindow: any;
 
   constructor(private documentService: DocumentService, 
@@ -42,8 +42,8 @@ export class DocumentDetail implements OnInit {
     this.router.navigate(['edit'], {relativeTo: this.route});
     // this.router.navigate(['/documents', this.id, 'edit']), {relativeTo: this.route};
   }
-  onDelete() {
-    this.documentService.deleteDocument(this.document);
+  onDeleteDocument() {
+    this.documentService.deleteDocument(this.id);
     this.router.navigate(['/documents']);
-}
+  }
 }

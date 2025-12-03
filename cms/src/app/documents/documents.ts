@@ -1,36 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Document } from './document.model';
-import { DocumentService } from './document.service';
+import { DataStorageService } from '../shared/data-storage.service';
+
+// import { Document } from './document.model';
+// import { DocumentService } from './document.service';
 
 @Component({
   selector: 'app-documents',
   standalone: false,
   templateUrl: './documents.html',
   styleUrl: './documents.css',
-  providers: [DocumentService]
 })
-export class Documents implements OnInit {
-  selectedDocument: Document;
 
-  constructor(private documentService: DocumentService) {}
+export class Documents implements OnInit {
+  // selectedDocument: Document;
+
+  constructor(private dataStorage: DataStorageService) {}
 
   ngOnInit() {
-      this.documentService.documentSelectedEvent
-        .subscribe(
-          (document: Document) => {
-            this.selectedDocument = document;
-          }
-        );
     }
-  // ngOnInit() {
-  //   this.documentService.documentSelectedEvent.subscribe((document: Document) => {
-  //     this.selectedDocument = document;
-  //     console.log('document received by parent component', document);
-  //   });
+
+  // onDocumentSelected(document: Document) {
+  //   this.selectedDocument = document;
+  //   console.log("document received by parent component");
   // }
-  onDocumentSelected(document: Document) {
-    this.selectedDocument = document;
-    console.log("document received by parent component");
-  }
+  // onClearDocuments() {
+  //   this.dataStorage.clearDocuments();
+  // }
 }

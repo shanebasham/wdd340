@@ -1,8 +1,10 @@
-<a style="cursor: pointer;" 
-  [routerLink]="['/documents', document.id]" 
+<a 
+  style="cursor: pointer;" 
+  [routerLink]="[index]" 
   routerLinkActive="active"
-  class="list-group-item clearfix documentDiv">
-  {{ document.name }}
+  class="list-group-item clearfix documentDiv"
+>
+  <h4 class="list-group-item-heading">{{ document.name }}</h4>
 </a>
 
-  <!-- [routerLink]="[index]"  -->
+  <!-- [routerLink]="['/documents', document.id]"  -->

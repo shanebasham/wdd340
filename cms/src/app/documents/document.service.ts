@@ -1,76 +1,56 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Document } from './document.model';
-import {MOCKDOCUMENTS} from './MOCKDOCUMENTS';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DocumentService {
-  documents: Document [] =[];
-  documentSelectedEvent = new Subject<Document>();
-  documentChangedEvent = new Subject<Document[]>();
-  documentListChangedEvent = new Subject<Document[]>();
-  maxDocumentId: number;
+  documents: Document[] = [];
+  documentsChanged = new Subject<Document[]>();
+  error = new Subject<string>();
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
-  }
+  private firebaseUrl = 'https://cms-project-30759-default-rtdb.firebaseio.com/cms/documents.json';
 
-  getDocuments(): Document[] {
+  constructor(private http: HttpClient) {}
+
+  getDocuments() {
     return this.documents.slice();
   }
-  getDocument(id: string): Document | null {
-    for (const document of this.documents) {
-      if (String(document.id) === id) {
-        return document;
-      }
-    }
-    return null;
-  }
-  getMaxId(): number {
-    let maxId = 0;  
-    for (const document of this.documents) {
-      const currentId = parseInt(document.id, 10);
-      if (currentId > maxId) {
-        maxId = currentId;
-      }
-    }
-    return maxId;
+  getDocument(index: number) {
+    return this.documents[index];
   }
   addDocument(document: Document) {
-    if (!document) {
-        return;
-    }
-    this.maxDocumentId++;
-    document.id = String(this.maxDocumentId);
     this.documents.push(document);
-    this.documentChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
-  updateDocument(originalDocument: Document, newDocument: Document) {
-    if (!originalDocument || !newDocument) {
-        return;
-    } 
-    const pos = this.documents.indexOf(originalDocument);
-    if (pos < 0) {
-        return;
-    }
-    newDocument.id = originalDocument.id;
-    this.documents[pos] = newDocument;
-    this.documentChangedEvent.next(this.documents.slice());
+  updateDocument(index: number, newDocument: Document) {
+    this.documents[index] = newDocument;
+    this.storeDocuments();
   }
-  deleteDocument(document: Document) {
-    if (!document) {
-        return;
-    }
-    const pos = this.documents.indexOf(document);
-    if (pos < 0) {
-        return;
-    }
-    this.documents.splice(pos, 1);
-    this.documentChangedEvent.next(this.documents.slice());
+  deleteDocument(index: number) {
+    this.documents.splice(index, 1);
+    this.storeDocuments();
+  }
+  storeDocuments() {
+    const documentsString = JSON.stringify(this.documents);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.put(this.firebaseUrl, documentsString, { headers })
+      .subscribe({
+        next: () => {
+          this.documentsChanged.next(this.documents.slice());
+        },
+        error: (err) => {
+          console.error('Error storing documents:', err);
+          this.error.next('Failed to store documents on the server.');
+        }
+      });
+  }
+  setDocuments(documents: Document[]) {
+    this.documents = documents;
+    this.documentsChanged.next(this.documents.slice());
   }
 }

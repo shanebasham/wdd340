@@ -10,9 +10,10 @@ import { Document } from '../document.model';
 })
 
 export class DocumentItem implements OnInit{
-  @Input() document: Document;
-  @Input() index: number;
+  @Input() document!: Document;
+  @Input() index!: number;
 
   ngOnInit() {
+    console.log("Rendering document item:", this.document);
   }
 }

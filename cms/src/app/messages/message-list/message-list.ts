@@ -1,6 +1,12 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone} from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+
+import { Contact } from '../../contacts/contact.model';
+import { ContactService } from '../../contacts/contact.service';
 import { Message } from '../message.model';
 import { MessageService } from '../message.service';
+import { DataStorageService } from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-message-list',
@@ -9,24 +15,39 @@ import { MessageService } from '../message.service';
   styleUrl: './message-list.css'
 })
 
-export class MessageList implements OnInit {
+export class MessageList implements OnInit, OnDestroy {
   messages: Message[] = [];
+  subscription: Subscription;
+  messages$!: Observable<Message[]>;
+  contacts: Contact[] = [];
 
-  constructor(private messageService: MessageService) {
-    this.messages = this.messageService.getMessages();
-    this.messageService.messageChangedEvent.subscribe((messages: Message[]) => {
-      this.messages = messages;
+  constructor(private dataStorageService: DataStorageService,
+              private contactService: ContactService,
+              private messageService: MessageService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private zone: NgZone) {}
+
+  ngOnInit() {
+    this.messages$ = this.dataStorageService.fetchMessages();
+    this.dataStorageService.fetchContacts().subscribe({
+      next: (contacts) => {
+        this.contacts = contacts;
+      },
+      error: (err) => {
+        console.error('Failed to load contacts:', err);
+        this.contacts = [];
+      }
     });
   }
 
-  ngOnInit(): void {
-    this.messages = this.messageService.getMessages();
+  getSenderName(senderId: string): string {
+    const contact = this.contacts.find(c => c.id === senderId);
+    return contact ? contact.name : 'Unknown';
   }
-  onSelectedMessage(message: Message) { 
-    this.messageService.messageSelectedEvent.emit(message);
-    console.log('message selected in list', message);
-  }
-  onAddMessage(message: Message) {
-    this.messages.push(message);
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

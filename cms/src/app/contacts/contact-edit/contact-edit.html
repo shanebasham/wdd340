@@ -1,20 +1,18 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <form id="contact-edit" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <form id="contact-edit" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="name">Name:</label>
           <input
             type="text"
             id="name"
-            class="form-control required"
+            class="form-control"
+            formControlName="name"
             size="120"
             max="120"
             name="name"
-            [ngModel]=contact?.name
             required
-            ngModel
-            #name="ngModel"
             >
         </div>
       </div>
@@ -25,14 +23,12 @@
           <input
             type="text"
             id="email"
-            class="form-control required"
+            class="form-control"
+            formControlName="email"
             size="120"
             max="255"
             name="email"
-            [ngModel]=contact?.email
             required
-            ngModel
-            #email="ngModel"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
             >
         </div>
@@ -44,13 +40,11 @@
           <input
             type="text"
             id="phone"
-            class="form-control invalid"
+            class="form-control"
+            formControlName="phone"
             size="150"
             max="255"
             name="phone"
-            [ngModel]=contact?.phone
-            ngModel
-            #phone="ngModel"
             pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*"
             >
         </div>
@@ -63,12 +57,10 @@
             type="text"
             id="imageUrl"
             class="form-control"
+            formControlName="imageUrl"
             size="150"
             max="255"
             name="imageUrl"
-            [ngModel]=contact?.imageUrl
-            ngModel
-            #imageUrl="ngModel"
             >
         </div>
       </div>
@@ -100,7 +92,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-sm-12 form-group">
           <label for="groupList">Group Contacts:</label>
             <div cdkDropList [cdkDropListData]="groupContacts">
@@ -111,12 +103,12 @@
                 <span *ngIf="groupContacts.length === 0" class="dropZone">Drag contacts here</span>
             </div>
         </div>
-      </div>
+      </div> -->
 
 
       <div class="row">
         <div class="col-xs-12 btn-toolbar">
-          <button class="btn btn-success" type="submit" *ngIf="f.valid">Save</button>
+          <button class="btn btn-success" type="submit" [disabled]="!contactForm.valid">Save</button>
           <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
         </div>
       </div>

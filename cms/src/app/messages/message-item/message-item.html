@@ -1,6 +1,11 @@
-<a style="cursor: pointer;" class="list-group-item clearfix messageDiv">
+<a 
+  style="cursor: pointer;" 
+  [routerLink]="[index]" 
+  routerLinkActive="active"
+  class="list-group-item clearfix"
+  >
   <span>
-    <h4 class="list-group-item-heading">{{ messageSender }}</h4>
-    <p class="list-group-item-text">{{ message.msgText }}</p>
+   <h4 class="list-group-item-heading">{{ message.subject }}</h4>
+  <p class="list-group-item-text text-muted">From: {{ messageSender }}</p>
   </span>
 </a>
