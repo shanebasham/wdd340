@@ -28,15 +28,17 @@
     (cdkDropListDropped)="drop($event)"> -->
       <!-- <div *ngFor="let contact of contacts$ | async | contactsFilter: term" cdkDrag [cdkDragData]="contact" class="list-contact clearfix"> -->
       <div class="center-panel" *ngIf="contacts$ | async as contacts">
-          <app-contact-item 
-            *ngFor="let contactEl of contacts | contactsFilter: term; let i = index" 
-            [contact]="contactEl"
-            [index]="i">
-          </app-contact-item>
+          <ng-container *ngIf="contacts.length > 0; else noContacts">
+            <app-contact-item 
+              *ngFor="let contactEl of contacts | contactsFilter: term" 
+              [contact]="contactEl"
+              [id]="contactEl.id">
+            </app-contact-item>
+          </ng-container>
       </div>
-      <p *ngIf="!contacts && contacts.length === 0">
-        No contacts found.
-      </p>
+      <ng-template #noContacts>
+          <p>No contacts found.</p>
+      </ng-template>
     </div>
   </div>
 </div>

@@ -27,7 +27,10 @@ export class DocumentList implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.documents$ = this.dataStorageService.fetchDocuments();
+    this.documentService.documentsChanged.next(this.documentService.getDocuments());
+    console.log('[DEBUG] documentsChanged emitted:', this.documents);
   }
+
   //   this.dataStorageService.fetchDocuments().subscribe(
   //     (docs) => {
   //       // Ensure Angular change detection runs

@@ -8,15 +8,17 @@
       <div class="panel-body">
          <div class="row">
             <div class="center-panel" *ngIf="messages$ | async as messages">
-               <app-message-item
-                  *ngFor="let messageEl of messages; let i = index"
-                  [message]="messageEl"
-                  [index]="i">
-               </app-message-item>
+               <ng-container *ngIf="messages.length > 0; else noMessages">
+                  <app-message-item
+                     *ngFor="let messageEl of messages"
+                     [message]="messageEl"
+                     [id]="messageEl.id">
+                  </app-message-item>
+               </ng-container>
             </div>
-            <p *ngIf="!messages && messages.length === 0">
-                  No messages found.
-            </p>
+            <ng-template #noMessages>
+               <p>No messages found.</p>
+            </ng-template>
          </div>
       </div>
       <div class="panel-footer">

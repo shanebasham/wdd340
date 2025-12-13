@@ -15,11 +15,13 @@ import { MessageService } from '../message.service';
 export class MessageEdit implements OnInit {
   // @ViewChild('subject') subjectInputRef!: ElementRef;
   // @ViewChild('msgText') msgTextInputRef!: ElementRef;
-  id: number;
+  id: string;
   editMode = false;
   messageForm: FormGroup
   // @Output() addMessageEvent = new EventEmitter<Message>();
 
+  originalMessage: Message;
+  message: Message;
   currentSender: string = '19';
 
   constructor(
@@ -29,28 +31,35 @@ export class MessageEdit implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
         this.editMode = params['id'] != null;
+        if (this.editMode) {
+          this.originalMessage = this.messageService.getMessage(this.id);
+          this.message = JSON.parse(JSON.stringify(this.originalMessage));
+        }
         this.initForm();
     });
   }
-
+  
   onSubmit() {
     const formValue = this.messageForm.value;
-
-    // Ensure current user is always "You"
     const newMessage: Message = {
+      id: this.editMode 
+        ? this.originalMessage.id 
+        : this.messageService.getMaxId(),
       subject: formValue.subject,
       msgText: formValue.msgText,
-      sender: 'you' // <-- force the sender
+      sender: "101"
     };
-
     if (this.editMode) {
-      this.messageService.updateMessage(this.id, newMessage);
+      this.messageService.updateMessage(this.originalMessage, newMessage, () => {
+        this.router.navigate(['/messages']);
+      });
     } else {
-      this.messageService.addMessage(newMessage);
+      this.messageService.addMessage(newMessage, () => {
+        this.router.navigate(['/messages']);
+      });
     }
-
     this.onClear();
   }
   private initForm() {
@@ -59,16 +68,15 @@ export class MessageEdit implements OnInit {
     let messageSender = '';
 
     if (this.editMode) {
-      const message = this.messageService.getMessage(this.id);
-      messageSubject = message.subject;
-      messageText = message.msgText;
-      messageSender = message.sender;
+      messageSubject = this.message.subject;
+      messageText = this.message.msgText;
+      messageSender = this.message.sender;
     }
 
     this.messageForm = new FormGroup({
       subject: new FormControl(messageSubject, Validators.required),
       msgText: new FormControl(messageText, Validators.required),
-      sender: new FormControl(messageSender, Validators.required)
+      sender: new FormControl(messageSender)
     });
   }
   // onSendMessage() {
@@ -88,11 +96,17 @@ export class MessageEdit implements OnInit {
     console.log('Message Deleted');
     this.messageForm.reset();
   }
+  
   get subject() {
     return this.messageForm.get('subject');
   }
-
-  get message() {
-    return this.messageForm.get('message');
+  get msgText() {
+    return this.messageForm.get('msgText');
   }
+  // get subject() {
+  //   return this.messageForm.get('subject');
+  // }
+  // get message() {
+  //   return this.messageForm.get('message');
+  // }
 }

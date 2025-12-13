@@ -13,7 +13,7 @@ import { ContactService } from '../contact.service';
 
 export class ContactDetail implements OnInit{
   contact: Contact;
-  id: number;
+  id: string;
   isDropdownOpen = false;
 
   constructor(private contactService: ContactService,
@@ -22,19 +22,22 @@ export class ContactDetail implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.id = params['id'];
-          this.contact = this.contactService.getContact(this.id);
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      console.log("Opening contact ID:", this.id);
+      this.contact = this.contactService.getContact(this.id);
     });
   }
+  
   onEditContact() {
-    this.router.navigate(['/contacts', this.id, 'edit']);
+    // this.router.navigate(['/contacts', this.id, 'edit']);
+    this.router.navigate(['/contacts'], {relativeTo: this.route});
   }
-  onDelete() {
-    this.contactService.deleteContact(this.id);
-    this.router.navigate(['/contacts']);  
+  onDeleteContact() {
+    if (!this.contact) return;
+    this.contactService.deleteContact(this.contact, () => {
+      this.router.navigate(['/contacts']);  
+    });
   }
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;

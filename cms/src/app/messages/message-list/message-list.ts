@@ -29,16 +29,8 @@ export class MessageList implements OnInit, OnDestroy {
               private zone: NgZone) {}
 
   ngOnInit() {
-    this.messages$ = this.dataStorageService.fetchMessages();
-    this.dataStorageService.fetchContacts().subscribe({
-      next: (contacts) => {
-        this.contacts = contacts;
-      },
-      error: (err) => {
-        console.error('Failed to load contacts:', err);
-        this.contacts = [];
-      }
-    });
+    this.messages$ = this.messageService.messagesChanged.asObservable();
+    this.messageService.messagesChanged.next(this.messageService.getMessages());
   }
 
   getSenderName(senderId: string): string {

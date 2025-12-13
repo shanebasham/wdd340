@@ -14,7 +14,7 @@ import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-d
 })
 
 export class ContactEdit implements OnInit {
-  id: number;
+  id: string;
   originalContact: Contact;
   contact: Contact;
   contacts: Contact[] = [];
@@ -25,8 +25,7 @@ export class ContactEdit implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private contactService: ContactService,
-    private router: Router
-  ) {} 
+    private router: Router) {} 
 
   ngOnInit() {
     // this.contacts = this.contactService.getContacts();
@@ -55,21 +54,47 @@ export class ContactEdit implements OnInit {
     //       }
     //     );
       this.route.params.subscribe((params: Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
         this.editMode = params['id'] != null;
+        if (this.editMode) {
+          this.originalContact = this.contactService.getContact(this.id);
+          this.contact = JSON.parse(JSON.stringify(this.originalContact));
+        }
         this.initForm();
       });
   }
-  onSubmit() {  
+
+  // onSubmit() {  
     // const value = form.value;
     // const newContact = new Contact('', value.name, value.email, value.phone, value.imageUrl, value.groupContacts);
+    // if (this.editMode) {
+    //   this.contactService.updateContact(this.id, this.contactForm.value);
+    // } else {
+    //   this.contactService.addContact(this.contactForm.value);
+    // }
+    // this.onCancel();
+  // }
+  onSubmit() {
+    const formValue = this.contactForm.value;
+    const newContact = new Contact(
+      this.contact?.id ?? '',
+      this.contactForm.value.name,
+      this.contactForm.value.email,
+      this.contactForm.value.phone,
+      this.contactForm.value.imageUrl,
+      []
+    );
     if (this.editMode) {
-      this.contactService.updateContact(this.id, this.contactForm.value);
+      this.contactService.updateContact(this.originalContact, newContact, () => {
+        this.router.navigate(['/contacts']);
+      });
     } else {
-      this.contactService.addContact(this.contactForm.value);
+      this.contactService.addContact(newContact, () => {
+        this.router.navigate(['/contacts']);
+      });
     }
-    this.onCancel();
   }
+
   onCancel() {
     this.router.navigate(['/contacts']);
   }
@@ -80,11 +105,10 @@ export class ContactEdit implements OnInit {
     let contactImageUrl= '';
 
     if (this.editMode) {
-      const contact = this.contactService.getContact(this.id);
-      contactName = contact.name;
-      contactEmail = contact.email;
-      contactPhone = contact.phone;
-      contactImageUrl = contact.imageUrl;
+      contactName = this.contact.name;
+      contactEmail = this.contact.email;
+      contactPhone = this.contact.phone;
+      contactImageUrl = this.contact.imageUrl;
     }
 
     this.contactForm = new FormGroup({

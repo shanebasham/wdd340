@@ -5,6 +5,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 
 // Import router
 const index = require('./server/routes/app.js');
@@ -16,6 +17,10 @@ const app = express();
 const documentsRoutes = require('./server/routes/documents');
 const messagesRoutes  = require('./server/routes/messages');
 const contactsRoutes  = require('./server/routes/contacts');
+const Document = require('./server/models/documents');
+const Message = require('./server/models/messages');
+const Contact = require('./server/models/contacts');
+const Sequence = require('./server/models/sequences');
 
 // Parsers and logger
 app.use(bodyParser.json());
@@ -36,6 +41,11 @@ app.use((req, res, next) => {
   );
   next();
 });
+// Routes
+app.use('/documents', documentsRoutes);
+app.use('/messages', messagesRoutes);
+app.use('/contacts', contactsRoutes);
+app.use('/', index);
 
 // Serve Angular static files
 app.use(express.static(path.join(__dirname, 'dist', 'my-first-app', 'browser')));
@@ -45,15 +55,28 @@ app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'my-first-app', 'browser', 'index.html'));
 });
 
-// Routes
-app.use('/', index);
-app.use('/documents', documentsRoutes);
-app.use('/messages', messagesRoutes);
-app.use('/contacts', contactsRoutes);
-
 // Port
 const port = process.env.PORT || '3000';
 app.set('port', port);
+
+// establish a connection to the mongo database
+// mongoose.connect('mongodb://localhost:27017/cms',
+//    { useNewUrlParser: true }, (err, res) => {
+//       if (err) {
+//          console.log('Connection failed: ' + err);
+//       }
+//       else {
+//          console.log('Connected to database!');
+//       }
+//    }
+// );
+mongoose.connect('mongodb://localhost:27017/cms', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('Connected to database!'))
+.catch(err => console.log('Connection failed: ' + err));
+
 
 // Create HTTP server
 const server = http.createServer(app);

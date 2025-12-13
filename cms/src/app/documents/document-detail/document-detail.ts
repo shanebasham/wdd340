@@ -43,7 +43,9 @@ export class DocumentDetail implements OnInit {
     // this.router.navigate(['/documents', this.id, 'edit']), {relativeTo: this.route};
   }
   onDeleteDocument() {
-    this.documentService.deleteDocument(this.id);
-    this.router.navigate(['/documents']);
+    if (!document) return;
+    this.documentService.deleteDocument(this.document, () => {
+      this.router.navigate(['/documents']);
+    });
   }
 }

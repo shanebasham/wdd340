@@ -40,7 +40,8 @@ export class ContactList implements OnInit, OnDestroy {
     //       this.contacts = contactsList;
     //     }
     //   );
-    this.contacts$ = this.dataStorageService.fetchContacts();
+    this.contacts$ = this.contactService.contactsChanged.asObservable();
+    this.contactService.contactsChanged.next(this.contactService.getContacts());
   }
   onNewContact() {
     // this.router.navigate(['new'], {relativeTo: this.route});
