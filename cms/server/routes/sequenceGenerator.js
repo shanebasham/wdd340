@@ -7,7 +7,6 @@ let sequenceId = null;
 
 class SequenceGenerator {
   constructor() {
-    // initialize sequence IDs
     Sequence.findOne().exec()
       .then(sequence => {
         if (!sequence) {
