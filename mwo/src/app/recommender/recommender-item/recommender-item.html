@@ -1,0 +1,14 @@
+<a
+    style="cursor: pointer;"
+    [routerLink]="[contact.id]"
+    routerLinkActive="active"
+    class="list-group-item clearfix contactDiv"
+>
+  <span class="pull-left">
+    <h4 class="list-group-item-heading">{{ contact.name }}</h4>
+    <p class="list-group-item-text">{{ contact.email }}</p>
+  </span>
+  <span class="pull-right">
+    <img [src]="contact.imageUrl" alt="{{ contact.name }}" width="50" height="50"/>
+  </span>
+</a>

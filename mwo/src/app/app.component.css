@@ -1,0 +1,26 @@
+.app-footer {
+  padding: 4rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #00ff88;
+  background: rgba(0, 0, 0, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 8rem;
+}
+
+.detail-panel {
+  order: 1; /* default order */
+}
+
+.list-panel {
+  order: 2; /* default order */
+}
+
+@media (max-width: 768px) {
+  .detail-panel {
+    order: 1; /* stays on top */
+  }
+  .list-panel {
+    order: 2; /* moves below */
+  }
+}

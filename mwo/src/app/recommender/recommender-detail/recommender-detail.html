@@ -1,0 +1,29 @@
+<h2>Contact Details</h2>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle"
+            (click)="toggleDropdown()">
+            Manage Contact <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" [class.show]="isDropdownOpen" style="cursor: pointer;" [style.display]="isDropdownOpen ? 'block' : 'none'">
+            <li><a style="cursor: pointer;" (click)="onEditContact()">Edit Contact</a></li>
+            <li><a style="cursor: pointer;" (click)="onDeleteContact()">Delete Contact</a></li>
+        </ul>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <img [src]="contact?.imageUrl" alt="{{contact?.name}}" class="img-responsive"/>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{contact?.name}}</h1>
+    <h3>{{contact?.email}}</h3>
+    <h3>{{contact?.phone}}</h3>
+  </div>
+</div>

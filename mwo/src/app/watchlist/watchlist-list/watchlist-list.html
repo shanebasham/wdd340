@@ -1,0 +1,32 @@
+<div class="glass-card">
+  <div class="panel-heading">
+    <span class="title">Watchlist</span>
+    <a class="btn btn-success" (click)="onNewMovie()">Add Movie</a>
+  </div>
+
+  <div class="glass-card-body">
+    <div class="input-group col-xs-10 search-container">
+      <input
+        #searchBox
+        type="text"
+        class="form-control glass-input"
+        placeholder="Search your movies..."
+        (keyup.enter)="search(searchBox.value)"
+        >
+      <div class="glyphicon glyphicon-search input-group-addon glass-addon"
+           (click)="search(searchBox.value)"></div>
+    </div>
+
+  <div class="glass-card-body">
+    <div class="center-panel" *ngIf="movies$ | async as movies">
+      <app-watchlist-item
+        *ngFor="let movieEl of movies | watchlistFilter: term; let i = index"
+        [movie]="movieEl"
+        [index]="i">
+      </app-watchlist-item>
+    </div>
+    <p *ngIf="!movies$">
+      No movies found.
+    </p>
+  </div>
+</div>

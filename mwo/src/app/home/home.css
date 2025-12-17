@@ -1,0 +1,72 @@
+.center-panel {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+.glass-card {
+  /* min-height: 80vh; */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #00ff88;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.panel-heading {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00ff88;
+  text-shadow: 0 0 5px rgba(0,255,136,0.8), 0 0 15px rgba(0,255,136,0.4);
+}
+.glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.02)
+  );
+  z-index: -1;
+}
+.neon-tagline {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  color: #00ff88;
+  text-shadow: 0 0 5px #00ff88, 0 0 20px #00ff88;
+  animation: pulse 2s infinite alternate;
+}
+@keyframes pulse {
+  0% { text-shadow: 0 0 5px #00ff88, 0 0 20px #00ff88; }
+  100% { text-shadow: 0 0 15px #00ff88, 0 0 40px #00ff88; }
+}
+.home-buttons {
+  margin: 2rem 0;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.btn-glass {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0,255,136,0.5);
+  background: rgba(0,255,136,0.25);
+  color: #00ff88;
+  text-shadow: 0 0 5px rgba(0,255,136,0.8);
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.btn-glass:hover {
+  background: rgba(0,255,136,0.35);
+  box-shadow: 0 0 20px rgba(0,255,136,0.5);
+}
+

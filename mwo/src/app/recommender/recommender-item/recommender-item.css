@@ -1,0 +1,26 @@
+.cdk-drag-preview {
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff, #e6f7ff);
+  box-shadow: 0 12px 25px -5px rgba(0,0,0,0.35),
+              0 16px 30px 3px rgba(0,0,0,0.25),
+              0 8px 35px 8px rgba(0,0,0,0.15);
+  transform: rotate(0deg) scale(1);
+  transition: transform 100ms ease-out, box-shadow 100ms ease-out;
+}
+.cdk-drag-dragging {
+  transition: transform 150ms ease-out;
+  z-index: 1000;
+}
+.cdk-drag-placeholder {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.list-contact:hover {
+  transform: scale(1.02);
+  transition: transform 150ms ease-in-out;
+  cursor: grab;
+}

@@ -1,0 +1,38 @@
+<div class="glass-card">
+  <div class="panel-heading">
+    <span class="title">Contacts</span>
+    <a class=" btn btn btn-success" [routerLink]="['new']">New Contact</a>
+  </div>
+
+  <!-- <div class="input-group col-xs-10">
+    <input
+      #searchBox
+      type="text"
+      class="form-control"
+      placeholder="Enter a search value"
+      (keyup.enter)="search(searchBox.value)"
+      >
+    <div class="glyphicon glyphicon-search input-group-addon" 
+          (click)="search(searchBox.value)"></div>
+  </div> -->
+
+  <div class="glass-card-body">
+    <div class="list-group">
+      <!-- <div 
+      cdkDropList 
+      [cdkDropListData]="contacts" 
+      (cdkDropListDropped)="drop($event)"> -->
+        <!-- <div *ngFor="let contact of contacts$ | async | contactsFilter: term" cdkDrag [cdkDragData]="contact" class="list-contact clearfix"> -->
+        <div class="center-panel" *ngIf="contacts$ | async as contacts">
+          <app-recommender-item 
+            *ngFor="let contactEl of contacts | contactsFilter: term" 
+            [contact]="contactEl"
+            [id]="contactEl.id">
+          </app-recommender-item>
+        </div>
+        <p>
+          No Movies found.
+        </p>
+    </div>
+  </div>
+</div>
