@@ -13,7 +13,6 @@ export class DocumentService {
   documentsChanged = new Subject<Document[]>();
   error = new Subject<string>();
 
-  // private firebaseUrl = 'https://cms-project-30759-default-rtdb.firebaseio.com/cms/documents.json';
   private documentsUrl = 'http://localhost:3000/documents';
 
   constructor(private http: HttpClient) {}
@@ -32,10 +31,6 @@ export class DocumentService {
   getDocument(index: number) {
     return this.documents[index];
   }
-  // addDocument(document: Document) {
-  //   this.documents.push(document);
-  //   this.storeDocuments();
-  // }
   addDocument(document: Document, callback?: () => void) {
     if (!document) return;
     if (!document.id) document.id = this.getMaxId();
@@ -95,10 +90,6 @@ export class DocumentService {
         }
       });
   }
-  // deleteDocument(index: number) {
-  //   this.documents.splice(index, 1);
-  //   this.storeDocuments();
-  // }
   deleteDocument(document: Document, callback?: () => void) {
     if (!document) return;
     const pos = this.documents.findIndex(d => d.id === document.id);
@@ -125,6 +116,7 @@ export class DocumentService {
     });
     return (maxId + 1).toString();
   }
+
   storeDocuments() {
     const documentsString = JSON.stringify(this.documents);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

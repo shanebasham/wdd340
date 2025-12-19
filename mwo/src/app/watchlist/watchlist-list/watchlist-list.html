@@ -20,9 +20,9 @@
   <div class="glass-card-body">
     <div class="center-panel" *ngIf="movies$ | async as movies">
       <app-watchlist-item
-        *ngFor="let movieEl of movies | watchlistFilter: term; let i = index"
+        *ngFor="let movieEl of movies | watchlistFilter: term"
         [movie]="movieEl"
-        [index]="i">
+        (movieClicked)="onMovieSelected($event)">
       </app-watchlist-item>
     </div>
     <p *ngIf="!movies$">

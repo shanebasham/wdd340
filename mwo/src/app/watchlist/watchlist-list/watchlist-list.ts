@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 
@@ -19,6 +19,7 @@ export class WatchlistList implements OnInit, OnDestroy {
   subscription: Subscription;
   movies$!: Observable<Watchlist[]>;
   term: string = '';
+  selectedMovie!: Watchlist;
 
   constructor(private dataStorageService: DataStorageService,
               private watchlistService: WatchlistService,
@@ -27,13 +28,17 @@ export class WatchlistList implements OnInit, OnDestroy {
               private zone: NgZone) {}
 
 
-ngOnInit() {
-  this.movies$ = this.dataStorageService.fetchwatchlist();
-  this.movies$.subscribe(movies => {
-    console.log('[DEBUG] Movies fetched from backend:', movies);
-  });
-}
 
+  ngOnInit() {
+    this.movies$ = this.dataStorageService.fetchWatchlist();
+    this.watchlistService.watchlistChanged.next(this.watchlistService.getMovies());
+    console.log('[DEBUG] watchlistChanged emitted:', this.watchlistService.getMovies());
+  }
+
+  // onMovieSelected(movie: Watchlist) {
+  //   this.selectedMovie = movie;
+  //   console.log('Selected movie:', movie);
+  // }
   search(value: string) {
     this.term = value;
   }

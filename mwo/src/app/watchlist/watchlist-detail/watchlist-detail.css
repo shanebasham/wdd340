@@ -16,6 +16,7 @@
 
 /* Glass card wrapper */
 .glass-card {
+  width: 38rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -79,8 +80,8 @@
 .panel-body {
   padding: 1rem 1.5rem;
   font-size: 1.5rem;
-  margin-left: 10rem;
-  margin-right: 15rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
 
 .detail-row {
@@ -106,4 +107,6 @@
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+
 

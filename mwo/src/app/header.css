@@ -1,8 +1,9 @@
 ul {
     list-style: none;
 }
-li {
-    margin: 15px;
+.navbar-brand {
+    padding: 0px 25px;
+    font-size: 2rem;
 }
 .navbar-default {
   background-color: transparent;
@@ -10,7 +11,7 @@ li {
 }
 .navbar {
   position: relative;
-  margin-bottom: 8rem;
+  margin-bottom: 6rem;
 }
 .glass-header {
     background: rgba(255, 255, 255, 0.2);
@@ -19,6 +20,7 @@ li {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: rgb(0, 255, 0);
     padding: 20px;
+    padding-bottom: 0px;
     text-align: center;
 }
 .glass-header::before {
@@ -63,7 +65,6 @@ li {
   color: #00ff88;
   text-shadow: 0 0 5px rgba(0,255,136,0.8);
   border-radius: 8px;
-  padding: 0.5rem 1rem;
 }
 
 .glass-header .dropdown-menu {
@@ -93,4 +94,71 @@ li {
 }
 .glass-header .caret {
   border-top-color: #00ff88;
+}
+
+.navbar-toggle {
+    position: relative;
+    z-index: 2;
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+
+.navbar-toggle:hover,
+.navbar-toggle:focus {
+    background: transparent;
+}
+.navbar-toggle span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    margin: 6px 0;
+    background-color: #00ff88;
+    box-shadow:
+        0 0 3px rgba(0, 255, 136, 0.8),
+        0 0 15px rgba(0, 255, 136, 0.4);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggle:hover span,
+.navbar-toggle:focus span {
+    background-color: #66ffbb;
+    box-shadow:
+        0 0 6px rgba(0, 255, 136, 1),
+        0 0 20px rgba(0, 255, 136, 0.6);
+}
+
+
+
+
+@media (max-width: 876px) {
+  .glass-header .dropdown-menu {
+    backdrop-filter: 0px;
+    border: 0px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    color: rgb(0, 255, 0);
+    text-align: center;
+    border-radius: 0px;
+  }
+  .glass-header .dropdown.open > a {
+    background: rgba(0,255,136,);
+    border: none;
+    border-radius: 0px;
+    color: #00ff88;
+    text-shadow: 0 0 0px rgba(0,255,136,);
+    box-shadow:
+        0 0 6px rgba(0, 255, 136, 1),
+        0 0 20px rgba(0, 255, 136, 0.6);
+    }
+  .glass-header .dropdown-menu > li > a:hover {
+    color: #66ffbb;
+    text-shadow:
+        0 0 10px rgba(0, 255, 136, 1),
+        0 0 20px rgba(0, 255, 136, 0.7);
+    }
+  .glass-header .dropdown-menu .divider {
+    background-color: transparent;
+    }
 }

@@ -10,9 +10,6 @@ import {Recommender} from './recommender.model';
 
 export class RecommenderService {
   contacts: Recommender[] = [];
-  // contactSelectedEvent = new Subject<Contact>();
-  // contactChangedEvent = new Subject<Contact[]>();
-  // contactListChangedEvent = new Subject<Contact[]>();
   contactsChanged = new Subject<Recommender[]>();
   error = new Subject<string>();
 
@@ -48,10 +45,6 @@ export class RecommenderService {
   getRecommender(id: string) {
     return this.contacts.find(c => c.id?.toString() === id.toString());
   }
-  // addContact(contact: Contact) {
-  //   this.contacts.push(contact);
-  //   this.storeContacts();
-  // }
   addRecommender(contact: Recommender, callback?: () => void) {
     if (!contact) return;
     if (!contact.id) contact.id = this.getMaxId();
@@ -75,10 +68,6 @@ export class RecommenderService {
         }
       });
   }
-  // updateContact(index: number, newContact: Contact) {
-  //   this.contacts[index] = newContact;
-  //   this.storeContacts();
-  // }
   updateRecommender(originalContact: Recommender, newContact: Recommender, callback?: () => void) {
     if (!originalContact || !newContact) return;
     const pos = this.contacts.findIndex(c => c.id === originalContact.id);

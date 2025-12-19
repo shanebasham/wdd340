@@ -31,75 +31,37 @@ export class WatchlistService {
   getMovie(index: number) {
     return this.movies[index];
   }
-  addMovie(movie: Watchlist, callback?: () => void) {
-    if (!movie) return;
-    if (!movie._id) movie._id = this.getMaxId();
-    const payload = { ...movie };
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post<Watchlist>(this.watchlistUrl, payload, { headers }).subscribe({
-      next: (addedMovie) => {
-        console.log('[DEBUG] Backend returned movie:', addedMovie);
-        if (!addedMovie || !addedMovie._id) {
-          console.error('Invalid movie returned from server:', addedMovie);
-          this.error.next('Failed to add movie: invalid server response.');
-          return;
-        }
-        this.movies.push(addedMovie);
-        this.sortAndSend();
-        if (callback) callback();
-      },
-      error: (err) => {
-        console.error('Error adding movie:', err);
-        this.error.next('Failed to add movie on server.');
-      }
-    });
+  getMovieById(id: number) {
+    return this.movies.find(m => +m.id === id);
   }
-
-  updateMovie(originalMovie: Watchlist, newMovie: Watchlist, callback?: () => void) {
-    if (!originalMovie || !newMovie) return;
-
-    const pos = this.movies.findIndex(m => m._id === originalMovie._id);
-    if (pos < 0) return;
-
-    newMovie._id = originalMovie._id;
-
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put(`${this.watchlistUrl}/${originalMovie._id}`, newMovie, { headers }).subscribe({
-      next: () => {
-        this.movies[pos] = newMovie;
-        this.sortAndSend();
-        if (callback) callback();
-      },
-      error: (err) => {
-        console.error('Error updating movie:', err);
-        this.error.next('Failed to update movie on server.');
-      }
-    });
+  addMovie(movie: Watchlist) {
+    return this.http.post<any>(this.watchlistUrl, movie);
   }
-
+  updateMovie(movie: Watchlist) {
+    return this.http.put<Watchlist>(`${this.watchlistUrl}/${movie.id}`, movie);
+  }
   deleteMovie(movie: Watchlist, callback?: () => void) {
     if (!movie) return;
-    const pos = this.movies.findIndex(m => m._id === movie._id);
+    const pos = this.movies.findIndex(m => m.id === movie.id);
     if (pos < 0) return;
-
-    this.http.delete(`${this.watchlistUrl}/${movie._id}`).subscribe({
-      next: () => {
-        this.movies.splice(pos, 1);
-        this.sortAndSend();
-        if (callback) callback();
-      },
-      error: (err) => {
-        console.error('Error deleting movie:', err);
-        this.error.next('Failed to delete movie on server.');
-      }
-    });
+    this.http.delete(`${this.watchlistUrl}/${movie.id}`)
+      .subscribe({
+        next: () => {
+          this.movies.splice(pos, 1);
+          this.sortAndSend();
+          if (callback) callback();
+        },
+        error: (err) => {
+          console.error('Error deleting movie:', err);
+          this.error.next('Failed to delete movie on server.');
+        }
+      });
   }
-
   getMaxId(): string {
     let maxId = 0;
     this.movies.forEach(movie => {
       if (!movie || !movie._id) return;
-      const currentId = +movie._id;
+      const currentId = +movie.id;
       if (currentId > maxId) maxId = currentId;
     });
     return (maxId + 1).toString();
@@ -108,13 +70,16 @@ export class WatchlistService {
   storeMovies() {
     const moviesString = JSON.stringify(this.movies);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put(this.watchlistUrl, moviesString, { headers }).subscribe({
-      next: () => this.watchlistChanged.next(this.movies.slice()),
-      error: (err) => {
-        console.error('Error storing movies:', err);
-        this.error.next('Failed to store movies on the server.');
-      }
-    });
+    this.http.put(this.watchlistUrl, moviesString, { headers })
+      .subscribe({
+        next: () => {
+          this.watchlistChanged.next(this.movies.slice());
+          },
+        error: (err) => {
+          console.error('Error storing movies:', err);
+          this.error.next('Failed to store movies on the server.');
+        }
+      });
   }
 
   setMovies(movies: Watchlist[]) {

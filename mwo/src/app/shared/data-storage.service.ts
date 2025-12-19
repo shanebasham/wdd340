@@ -21,7 +21,7 @@ export class DataStorageService {
     private contactService: RecommenderService
   ) {}
 
-  fetchwatchlist(): Observable<Watchlist[]> {
+  fetchWatchlist(): Observable<Watchlist[]> {
     return this.http.get<{ message: string; watchlist: Watchlist[] }>(this.watchlistUrl).pipe(
         map(res => res.watchlist),
         tap(movies => this.watchlistService.setMovies(movies)),

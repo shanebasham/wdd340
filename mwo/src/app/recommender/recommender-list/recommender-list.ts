@@ -5,7 +5,6 @@ import { Subscription, Observable } from 'rxjs';
 import { Recommender } from '../recommender.model';
 import { RecommenderService } from '../recommender.service';
 import { DataStorageService } from '../../shared/data-storage.service';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-recommender-list',
@@ -32,7 +31,6 @@ export class RecommenderList implements OnInit, OnDestroy {
   }
 
   onNewContact() {
-    // this.router.navigate(['new'], {relativeTo: this.route});
     this.router.navigate(['/contacts', 'new'], {relativeTo: this.route});
   }
   ngOnDestroy() {

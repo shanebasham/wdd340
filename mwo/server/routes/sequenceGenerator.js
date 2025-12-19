@@ -19,7 +19,7 @@ class SequenceGenerator {
       })
       .then(sequence => {
         sequenceId = sequence._id;
-        maxWatchlistId = sequence.maxWatchlistId
+        maxWatchlistId = sequence.maxWatchlistId;
         maxContactId = sequence.maxContactId;
         console.log('SequenceGenerator initialized:', { sequenceId, maxWatchlistId, maxContactId });
       })
@@ -28,37 +28,51 @@ class SequenceGenerator {
       });
   }
 
-  async nextId(collectionType) {
-    let nextId;
-    let updateObject = {};
+async nextId(collectionType) {
+  let nextId;
+  let updateObject = {};
 
-    switch (collectionType) {
-      case 'contacts':
-        maxContactId++;
-        nextId = maxContactId;
-        updateObject.maxContactId = maxContactId;
-        break;
+  try {
+    if (collectionType === 'watchlist') {
+      // Always sync with actual highest id in movie_watchlist
+      const maxMovie = await require('../models/watchlist')
+        .findOne()
+        .sort({ id: -1 })
+        .select('id')
+        .exec();
 
-      case 'watchlist':
-        maxWatchlistId++;
-        nextId = maxWatchlistId;
-        updateObject.maxWatchlistId = maxWatchlistId;
-        break;
+      const dbMaxId = maxMovie ? parseInt(maxMovie.id, 10) : 0;
 
-      default:
-        return -1;
+      // Ensure in memory value is never behind DB
+      maxWatchlistId = Math.max(maxWatchlistId, dbMaxId);
+
+      maxWatchlistId++;
+      nextId = maxWatchlistId;
+      updateObject.maxWatchlistId = maxWatchlistId;
     }
-    try {
-      await Sequence.updateOne(
-        { _id: sequenceId },
-        { $set: updateObject }
-      );
-    } catch (err) {
-      console.error('Error updating sequence:', err);
-      return null;
+    else if (collectionType === 'contacts') {
+      maxContactId++;
+      nextId = maxContactId;
+      updateObject.maxContactId = maxContactId;
     }
+    else {
+      console.log('Invalid collectionType:', collectionType);
+      return -1;
+    }
+
+    await Sequence.updateOne(
+      { _id: sequenceId },
+      { $set: updateObject }
+    );
+
+    console.log('nextId generated for', collectionType, '=', nextId);
     return nextId;
   }
+  catch (err) {
+    console.error('Error generating nextId:', err);
+    return null;
+  }
+}
 }
 
 module.exports = new SequenceGenerator();

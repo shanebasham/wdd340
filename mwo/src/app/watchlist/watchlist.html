@@ -1,15 +1,10 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <!-- <button class="btn btn-danger" (click)="onClearDocuments()">
-        Clear Documents
-      </button> -->
-      <app-watchlist-list></app-watchlist-list>
-    </div>
-    <div class="col-md-6">
-      <div class="glass-card">
-        <router-outlet></router-outlet>
-      </div>
+<div class="row watchlist-layout" [class.detail-open]="detailOpen">
+  <div class="watchlist-list-panel" >
+    <app-watchlist-list></app-watchlist-list>
+  </div>
+  <div>
+    <div class="glass-card watchlist-detail-panel">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

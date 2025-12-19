@@ -3,19 +3,19 @@
     <h4 class="title">{{ movie?.title }}</h4>
     <div class="panel-actions">
       <!-- <a style="cursor: pointer;" class="btn btn-primary" (click)="onView()">View</a> -->
-      <a class="btn btn-success" (click)="onEditDocument()">Edit</a>
-      <a class="btn btn-success" (click)="onDeleteDocument()">Delete</a>
+      <a class="btn btn-success" (click)="onEditMovie()">Edit</a>
+      <a class="btn btn-success" (click)="onDeleteMovie()">Delete</a>
     </div>
   </div>
 
-  <div class="panel-body pad-left-right">
-    <div class="detail-row"><strong>Year:</strong> {{ movie?.year }}</div>
-    <div class="detail-row"><strong>Type:</strong> {{ movie?.type }}</div>
-    <div class="detail-row"><strong>Genres:</strong> {{ movie?.genres.join(', ') }}</div>
-    <div class="detail-row"><strong>Status:</strong> {{ movie?.status }}</div>
-    <div class="detail-row"><strong>Watched:</strong> {{ movie?.watched ? 'Yes' : 'No' }}</div>
-    <div class="detail-row"><strong>Favorite:</strong> {{ movie?.favorite ? 'Yes' : 'No' }}</div>
-    <div class="detail-row"><strong>Rating:</strong> {{ movie?.rating ?? 'N/A' }}</div>
-    <div class="detail-row"><strong>Notes:</strong> {{ movie?.notes }}</div>
+  <div class="panel-body pad-left-right" *ngIf="movie">
+    <div class="detail-row"><strong>Year:</strong> {{ movie.year }}</div>
+    <div class="detail-row"><strong>Type:</strong> {{ movie.type }}</div>
+    <div class="detail-row"><strong>Genres:</strong> {{ movie.genres?.join(', ') || 'None' }}</div>
+    <div class="detail-row"><strong>Status:</strong> {{ movie.status }}</div>
+    <div class="detail-row"><strong>Watched:</strong> {{ movie.watched ? 'Yes' : 'No' }}</div>
+    <div class="detail-row"><strong>Favorite:</strong> {{ movie.favorite ? 'Yes' : 'No' }}</div>
+    <div class="detail-row"><strong>Rating:</strong> {{ movie.rating ?? 'N/A' }}</div>
+    <div class="detail-row"><strong>Notes:</strong> {{ movie.notes }}</div>
   </div>
 </div>

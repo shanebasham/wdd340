@@ -23,28 +23,49 @@ export class WatchlistDetail implements OnInit {
               private windowRefService: WindRefService) {
     this.nativeWindow = this.windowRefService.getNativeWindow();
     }
-
+    
   ngOnInit() {
-    this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.id = params['id'];
-          this.movie = this.watchlistService.getMovie(this.id);
+    this.route.params.subscribe(params => {
+      const id = +params['id'];
+      console.log('Route param id:', id);
+      this.movie = this.watchlistService.getMovieById(id); 
+      if (!this.movie) {
+        console.log('Movie not found', id);
+      } else {
+        console.log('Movie loaded:', this.movie);
+      }
     });
   }
+  // ngOnInit() {
+  //   this.route.params
+  //     .subscribe((params: Params) => {
+  //       const movieId = params['id'];
+  //       this.watchlistService.getMovieFromServer(movieId)
+  //         .subscribe({
+  //           next: (movie) => {
+  //             this.movie = movie;
+  //           },
+  //           error: (err) => {
+  //             console.error('Failed to load movie:', err);
+  //           }
+  //         });
+  //   });
+  // }
   // onView() {
   //   if (this.movie.url) {
   //     this.nativeWindow.open(this.movie.url);
   //     console.log('movie opened in new window');
   //   }
   // }
-  onEditDocument() {
+  onEditMovie() {
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
-  onDeleteDocument() {
-    if (!document) return;
+  onDeleteMovie() {
+    if (!this.movie) return;
     this.watchlistService.deleteMovie(this.movie, () => {
-      this.router.navigate(['/documents']);
+      this.router.navigate(['/watchlist']).then(() => {
+        window.location.reload();
+      });
     });
   }
 }
